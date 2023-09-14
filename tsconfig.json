@@ -8,7 +8,12 @@
     "esModuleInterop": true,
     "sourceMap": true,
     "allowJs": true,
-    "removeComments": true
+    "removeComments": true,
+    "baseUrl": ".",
+    "paths": {
+      "@main/*": ["src/api/main/*"],
+      "@utils/*": ["src/api/util/*"]
+    }
   },
   "include": ["src"],
   "exclude": ["node_modules"]
