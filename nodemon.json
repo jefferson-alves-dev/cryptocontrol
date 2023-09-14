@@ -2,8 +2,7 @@
   "watch": ["src", "tests"],
   "ext": "ts",
   "ignore": ["node_modules", "dist", ".git"],
-  "exec": "ts-node --transpileOnly --skip-ignore ./src/api/main/server.ts",
-  "delay": "1000",
+  "exec": "rimraf dist && tsc -p tsconfig.json && node ./dist/api/main/server.js",
   "env": {
     "NODE_ENV": "development"
   }
