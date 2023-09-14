@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-var */
 /* eslint-disable prefer-const */
-import { loginValidationSchema, signupValidationSchema } from '@main/valitadions/schemas/auth'
+import { loginValidationSchema, signupValidationSchema } from '@main/validations/schemas/auth'
 import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 import { Request, Response, Router } from 'express'
