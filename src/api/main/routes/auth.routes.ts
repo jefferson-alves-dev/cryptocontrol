@@ -48,7 +48,12 @@ route.post('/signup', async (req: Request, res: Response) => {
     return res.status(500).json({ message: 'Internal server error' })
   }
 
-  const hashedPassword = await bcrypt.hash(password, Number(process.env.SALT_HASH))
+  if (!process.env.HASH_PASS_SECRET) {
+    console.log('HASH_PASS_SECRET is not set')
+    return res.status(500).json({ message: 'Internal server error' })
+  }
+
+  const hashedPassword = await bcrypt.hash(password + process.env.HASH_PASS_SECRET, Number(process.env.SALT_HASH))
 
   try {
     const client = await mongo.connect()
