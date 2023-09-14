@@ -6,6 +6,7 @@ import bcrypt from 'bcrypt'
 import dotenv from 'dotenv'
 import { Request, Response, Router } from 'express'
 import Joi from 'joi'
+import jwt from 'jsonwebtoken'
 import { MongoClient, ObjectId } from 'mongodb'
 dotenv.config()
 
@@ -97,12 +98,49 @@ route.post('/signup', async (req: Request, res: Response) => {
 
 route.post('/login', async (req: Request, res: Response) => {
   const { email, password } = req.body
+
+  // Joi Schema validation
   try {
     await loginValidationSchema.validateAsync({ email, password })
-    return res.status(201).json({ message: 'Login successfully' })
   } catch (e: unknown) {
     const error = e as Joi.ValidationError
     return res.status(400).json({ message: 'Validation error', error: error.details[0]?.message })
+  }
+
+  // Verify if user exists
+  const uri = process.env.DB_URI
+  if (!uri) {
+    console.log('DB_URI is not set')
+    return res.status(500).json({ message: 'Internal server error' })
+  }
+  const mongo = new MongoClient(uri)
+  try {
+    const collection = mongo.db().collection('users')
+    const userExists = await collection.findOne({ email })
+    if (!userExists) {
+      return res.status(400).json({ message: 'email or password is incorrect' })
+    }
+    if (!userExists.isActive) {
+      return res.status(400).json({ message: 'email or password is incorrect' })
+    }
+    const passwordMatch = await bcrypt.compare(password + process.env.HASH_PASS_SECRET, userExists.password)
+    if (!passwordMatch) {
+      return res.status(400).json({ message: 'email or password is incorrect' })
+    }
+    if (!process.env.JWT_SECRET) {
+      console.log('JWT_SECRET is not set')
+      return res.status(500).json({ message: 'Internal server error' })
+    }
+    const token = jwt.sign({ userId: userExists._id.toHexString() }, process.env.JWT_SECRET, {
+      expiresIn: '24h',
+    })
+    return res.status(200).json({ token })
+  } catch (e: unknown) {
+    console.log(e)
+    return res.status(500).json({ message: 'Internal server error' })
+  } finally {
+    await mongo.close()
+    console.log('MongoDB connection closed')
   }
 })
 
