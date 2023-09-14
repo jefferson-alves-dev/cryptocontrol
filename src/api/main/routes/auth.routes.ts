@@ -145,11 +145,33 @@ route.post('/login', async (req: Request, res: Response) => {
 })
 
 route.post('/logout', async (req: Request, res: Response) => {
-  const { token } = req.headers
-  if (!token) {
-    return res.status(400).json({ message: 'token is required' })
+  try {
+    if (!req.headers['authorization']) {
+      return res.status(400).json({ message: 'token is required' })
+    }
+
+    const token = req.headers['authorization']
+    if (!token) {
+      return res.status(400).json({ message: 'token is required' })
+    }
+
+    if (!process.env.JWT_SECRET) {
+      console.log('JWT_SECRET is not set')
+      return res.status(500).json({ message: 'Internal server error' })
+    }
+
+    const userId = jwt.verify(token, process.env.JWT_SECRET) as { userId: string }
+    if (!userId) {
+      return res.status(400).json({ message: 'token is invalid' })
+    }
+
+    return res.status(200).json({ message: `The userId ${userId.userId} has been logged out` })
+  } catch (error) {
+    if (error instanceof jwt.JsonWebTokenError) {
+      return res.status(400).json({ message: 'Invalid token' })
+    }
+    return res.status(500).json({ message: 'Internal server error' })
   }
-  return res.status(200).json({ message: `Token = ${token}`, verbal: 'post' })
 })
 
 export default route
