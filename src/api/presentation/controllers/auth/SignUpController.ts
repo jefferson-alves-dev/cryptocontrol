@@ -23,6 +23,7 @@ export class SignUpController implements IController {
         return badRequest(new Error('User could not be created'))
       }
     } catch (error) {
+      console.log(error)
       if (error instanceof Joi.ValidationError) {
         return badRequest(error)
       }
