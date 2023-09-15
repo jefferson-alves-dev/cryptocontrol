@@ -1,14 +1,14 @@
 import dotenv from 'dotenv'
 dotenv.config()
 
+import { RouteExpressAdapter } from '@bootstrap/adapters'
+import { makeSignupController } from '@bootstrap/factories/controllers/auth'
 import { loginValidationSchema } from '@presentation/validations/schemas/auth'
 import bcrypt from 'bcrypt'
 import { Request, Response, Router } from 'express'
 import Joi from 'joi'
 import jwt from 'jsonwebtoken'
 import { MongoClient } from 'mongodb'
-import { RouteExpressAdapter } from 'src/api/bootstrap/adapters'
-import { makeSignupController } from 'src/api/bootstrap/factories/controllers/auth'
 
 const route = Router()
 

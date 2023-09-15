@@ -1,4 +1,5 @@
 import { Router } from 'express'
+
 import authRoutes from './auth.routes'
 import depositsRoutes from './deposits.routes'
 import usersRoutes from './users.routes'
