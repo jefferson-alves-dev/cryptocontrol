@@ -11,13 +11,13 @@
     "removeComments": true,
     "baseUrl": ".",
     "paths": {
-      "@main/*": ["src/api/main/*"],
+      "@bootstrap/*": ["src/api/bootstrap/*"],
       "@utils/*": ["src/api/utils/*"],
       "@presentation/*": ["src/api/presentation/*"],
       "@services/*": ["src/api/services/*"],
       "@infra/*": ["src/api/infra/*"],
       "@config/*": ["src/api/config/*"],
-      "@core/*": ["src/api/core/*"]
+      "@domain/*": ["src/api/domain/*"]
     }
   },
   "include": ["src"],

@@ -1,4 +1,4 @@
-import { ICreateUser } from '@core/usecases/user'
+import { ICreateUser } from '@domain/usecases/user'
 import { badRequest, conflict, created, serverError } from '@presentation/helpers'
 import { IController } from '@presentation/protocols/contracts/controller'
 import { HttpResponse } from '@presentation/protocols/types/http'

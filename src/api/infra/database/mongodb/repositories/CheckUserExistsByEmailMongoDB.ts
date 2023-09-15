@@ -10,10 +10,26 @@ export class CheckUserExistsByEmailMongoDB implements ICheckUserExistsByEmailRep
     this.client = new MongoClient(this.uri)
   }
   async check(email: string): Promise<boolean> {
+    const startTime = Date.now()
+    const startTimeConnection = Date.now()
     await this.client.connect()
+    const endTimeConnection = Date.now()
+
+    const startTimeSearchUser = Date.now()
     const collection = this.client.db().collection('users')
     const userCount = await collection.countDocuments({ email })
+    const endTimeSearchUser = Date.now()
+
+    const startTimeCloseConnection = Date.now()
     await this.client.close()
+    const endTimeCloseConnection = Date.now()
+    const endTime = Date.now()
+
+    console.log(`Tempo para abrir conexão com o MongoDB: ${endTimeConnection - startTimeConnection}ms`)
+    console.log(`Tempo para encontrar o usuário MongoDB: ${endTimeSearchUser - startTimeSearchUser}ms`)
+    console.log(`Tempo para fechar conexão com MongoDB: ${endTimeCloseConnection - startTimeCloseConnection}ms`)
+    console.log('Tempo total: ' + (endTime - startTime) + 'ms')
+    console.log('💤💤💤💤💤💤💤💤💤💤💤💤💤💤💤💤')
     return userCount > 0 ? true : false
   }
 }

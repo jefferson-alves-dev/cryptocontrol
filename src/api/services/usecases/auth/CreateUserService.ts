@@ -1,6 +1,6 @@
 import CONFIG from '@config/index'
-import { TUser } from '@core/types'
-import { ICreateUser } from '@core/usecases/user'
+import { TUser } from '@domain/types'
+import { ICreateUser } from '@domain/usecases/user'
 import { ICheckUserExistsByEmailRepository, ICreateUserRepository } from '@services/protocols/contracts/database/user'
 
 import { UserAlreadyExistsError } from '../../erros'

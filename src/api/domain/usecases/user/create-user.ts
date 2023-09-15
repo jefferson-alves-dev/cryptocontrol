@@ -1,4 +1,4 @@
-import { TUser } from '@core/types'
+import { TUser } from '@domain/types'
 
 export interface ICreateUser {
   create(data: TUser.Create): Promise<TUser.Created>

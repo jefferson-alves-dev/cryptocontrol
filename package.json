@@ -40,12 +40,12 @@
     "typescript": "^5.2.2"
   },
   "_moduleAliases": {
-    "@main": "dist/api/main",
+    "@bootstrap": "dist/api/bootstrap",
     "@utils": "dist/api/utils",
     "@presentation": "dist/api/presentation",
     "@services": "dist/api/services",
     "@infra": "dist/api/infra",
     "@config": "dist/api/config",
-    "@core": "dist/api/core"
+    "@domain": "dist/api/domain"
   }
 }

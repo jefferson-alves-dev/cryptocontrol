@@ -1,8 +1,8 @@
 import { CheckUserExistsByEmailMongoDB, CreateUserRepositoryMongoDB } from '@infra/database/mongodb/repositories'
 import { SignUpController } from '@presentation/controllers/auth'
 import { IController } from '@presentation/protocols/contracts'
+import { signupValidationSchema } from '@presentation/validations/schemas/auth'
 import { CreateUserService } from '@services/usecases/auth/CreateUserService'
-import { signupValidationSchema } from '@utils/validations/schemas/auth'
 import bcrypt from 'bcrypt'
 
 export const makeSignupController = (): IController => {
