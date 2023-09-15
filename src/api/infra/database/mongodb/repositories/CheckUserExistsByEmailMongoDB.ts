@@ -12,8 +12,8 @@ export class CheckUserExistsByEmailMongoDB implements ICheckUserExistsByEmailRep
   async check(email: string): Promise<boolean> {
     await this.client.connect()
     const collection = this.client.db().collection('users')
-    const user = await collection.findOne({ email })
+    const userCount = await collection.countDocuments({ email })
     await this.client.close()
-    return !!user
+    return userCount > 0 ? true : false
   }
 }
