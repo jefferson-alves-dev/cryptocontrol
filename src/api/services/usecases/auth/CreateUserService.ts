@@ -1,13 +1,13 @@
-import CONFIG from '@config/index'
 import { TUser } from '@domain/types'
 import { ICreateUser } from '@domain/usecases/user'
 import { ICheckUserExistsByEmailRepository, ICreateUserRepository } from '@services/protocols/contracts/database/user'
+import { IHasher } from '@services/protocols/contracts/hasher'
 
 import { UserAlreadyExistsError } from '../../erros'
 
 export class CreateUserService implements ICreateUser {
   constructor(
-    private readonly passwordEncrypter: any,
+    private readonly hasher: IHasher,
     private readonly createUserRepository: ICreateUserRepository,
     private readonly checkUserExistsByEmailRepository: ICheckUserExistsByEmailRepository,
   ) {}
@@ -22,10 +22,7 @@ export class CreateUserService implements ICreateUser {
       }
     }
 
-    const hashedPassword = await this.passwordEncrypter.hash(
-      password + CONFIG.HASH_PASS_SECRET,
-      Number(CONFIG.SALT_HASH),
-    )
+    const hashedPassword = await this.hasher.hash(password)
 
     const createUser = await this.createUserRepository.create({
       name,
