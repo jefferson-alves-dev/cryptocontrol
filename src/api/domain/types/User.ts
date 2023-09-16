@@ -16,7 +16,8 @@ export namespace TUser {
     password: string
   }
 
-  export type Created = {
-    id: string
+  export type Result = {
+    error: globalThis.Error | null
+    data: { id: string } | null
   }
 }
