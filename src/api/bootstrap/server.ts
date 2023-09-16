@@ -3,9 +3,13 @@ import 'module-alias/register'
 import routes from '@bootstrap/routes/index.routes'
 import express from 'express'
 
+import { validateJsonFormat } from './middlewares'
+
 const server = express()
+
 server.use(express.json())
 server.use(express.urlencoded({ extended: true }))
+server.use(validateJsonFormat)
 
 server.use(routes)
 
