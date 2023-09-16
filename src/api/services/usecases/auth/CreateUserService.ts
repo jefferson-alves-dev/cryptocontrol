@@ -11,12 +11,15 @@ export class CreateUserService implements ICreateUser {
     private readonly createUserRepository: ICreateUserRepository,
     private readonly checkUserExistsByEmailRepository: ICheckUserExistsByEmailRepository,
   ) {}
-  async create(userData: TUser.Create): Promise<TUser.Created> {
+  async create(userData: TUser.Create): Promise<TUser.Result> {
     const { name, email, password } = userData
     const user = await this.checkUserExistsByEmailRepository.check(email)
 
     if (user) {
-      throw new UserAlreadyExistsError()
+      return {
+        error: new UserAlreadyExistsError(),
+        data: null,
+      }
     }
 
     const hashedPassword = await this.passwordEncrypter.hash(
@@ -24,7 +27,7 @@ export class CreateUserService implements ICreateUser {
       Number(CONFIG.SALT_HASH),
     )
 
-    return await this.createUserRepository.create({
+    const createUser = await this.createUserRepository.create({
       name,
       email,
       password: hashedPassword,
@@ -33,5 +36,7 @@ export class CreateUserService implements ICreateUser {
       updatedAt: null,
       desactivatedAt: null,
     })
+
+    return { error: null, data: { id: createUser.id } }
   }
 }
