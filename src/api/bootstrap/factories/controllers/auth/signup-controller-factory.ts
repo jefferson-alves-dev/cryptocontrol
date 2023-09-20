@@ -10,6 +10,6 @@ export const makeSignupController = (): IController => {
   const userRepository = new UserRepositoryMongoDB()
   const hasher = new BCryptAdapter()
   const joiValidatorAdapter = new JoiValidatorAdapter(signupValidationSchema)
-  const userService = new UserService(userRepository, hasher)
-  return new SignUpController(joiValidatorAdapter, userService)
+  const userService = new UserService(userRepository)
+  return new SignUpController(joiValidatorAdapter, userService, hasher)
 }
