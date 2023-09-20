@@ -2,7 +2,7 @@ import { TUser } from '@domain/types'
 import { IHasher } from '@domain/usecases/cryptography'
 import { IUserUsecase, TUserUsecase } from '@domain/usecases/user'
 import { UserAlreadyExistsError } from '@services/erros'
-import { IUserRepository } from '@services/protocols/contracts/database/repositories/user'
+import { IUserRepository } from '@services/protocols/contracts/database/repositories'
 
 export class UserService implements IUserUsecase {
   constructor(private readonly userRepository: IUserRepository) {}
