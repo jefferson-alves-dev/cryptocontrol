@@ -1,9 +1,8 @@
 import CONFIG from '@config/index'
-import { IHasherCompare } from '@domain/usecases/cryptography'
-import { IHasher } from '@services/protocols/contracts/hasher'
+import { IHasher } from '@domain/usecases/cryptography'
 import bcrypt from 'bcrypt'
 
-export class BCryptAdapter implements IHasher, IHasherCompare {
+export class BCryptAdapter implements IHasher {
   async hash(textPlain: string): Promise<string> {
     const _salt = CONFIG.SALT_HASH
     const hashSecret = CONFIG.HASH_PASS_SECRET
