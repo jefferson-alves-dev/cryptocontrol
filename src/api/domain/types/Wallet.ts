@@ -9,10 +9,19 @@ export namespace TWallet {
     desactivatedAt: number | null
   }
 
-  export type Create = Omit<TWallet.Full, 'id'>
+  export type Create = Pick<TWallet.Full, 'name' | 'userID'>
 
   export type Created = {
     error: globalThis.Error | null
     data: { id: string } | null
+  }
+
+  export type Update = {
+    userID: string
+    name: string
+    isActive: boolean
+    createdAt: number
+    updatedAt: number | null
+    desactivatedAt: number | null
   }
 }

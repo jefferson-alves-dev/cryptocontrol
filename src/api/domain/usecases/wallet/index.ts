@@ -1,9 +1,9 @@
 import { TWallet } from '@domain/types'
 
 export interface IWalletUsecase {
-  getById(id: string): Promise<TWallet.Full>
-  getAll(): Promise<TWallet.Full>
+  getById(walletID: string, userID: string): Promise<TWallet.Full | null>
+  getAll(userID: string): Promise<TWallet.Full[] | null>
   create(walletData: TWallet.Create): Promise<TWallet.Created>
-  updateById(id: string, walletData: TWallet.Create): void
-  deleteById(id: string): void
+  updateById(walletID: string, walletData: TWallet.Update): Promise<void>
+  deleteById(walletID: string, userID: string): Promise<void>
 }
