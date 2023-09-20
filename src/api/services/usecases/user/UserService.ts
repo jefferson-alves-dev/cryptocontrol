@@ -5,10 +5,7 @@ import { UserAlreadyExistsError } from '@services/erros'
 import { IUserRepository } from '@services/protocols/contracts/database/repositories/user'
 
 export class UserService implements IUserUsecase {
-  constructor(
-    private readonly userRepository: IUserRepository,
-    private readonly hasher: IHasher,
-  ) {}
+  constructor(private readonly userRepository: IUserRepository) {}
   async getByEmail(email: string): Promise<TUserUsecase.Result> {
     const user = await this.userRepository.getByEmail(email)
     return user || null
@@ -19,7 +16,7 @@ export class UserService implements IUserUsecase {
     return user || null
   }
 
-  async create(userData: TUser.Create): Promise<TUser.Result> {
+  async create(userData: TUser.Create, hasher: IHasher): Promise<TUser.Result> {
     const { name, email, password } = userData
     const user = await this.userRepository.getByEmail(email)
 
@@ -30,7 +27,7 @@ export class UserService implements IUserUsecase {
       }
     }
 
-    const hashedPassword = await this.hasher.hash(password)
+    const hashedPassword = await hasher.hash(password)
 
     const createUser = await this.userRepository.create({
       name,
