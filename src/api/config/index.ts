@@ -8,8 +8,9 @@ const CONFIG = {
   DB_NAME: process.env.DB_NAME || '',
   SALT_HASH: Number(process.env.SALT_HASH) || '',
   HASH_PASS_SECRET: process.env.HASH_PASS_SECRET || '',
-  JWT_SECRET: process.env.JWT_SECRET || '',
   PORT: process.env.PORT || 3000,
+  TOKEN_SECRET: process.env.TOKEN_SECRET || '',
+  TOKEN_EXPIRATION: process.env.TOKEN_EXPIRATION || '6h',
 }
 
 export default CONFIG

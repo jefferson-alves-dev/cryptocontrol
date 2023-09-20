@@ -1,5 +1,5 @@
 import { MongoDBClientSingleton } from '@infra/database/clients'
-import { ICheckUserExistsByEmailRepository } from '@services/protocols/contracts/database/user'
+import { ICheckUserExistsByEmailRepository } from '@services/protocols/contracts/database/repositories/user'
 
 export class CheckUserExistsByEmailMongoDB implements ICheckUserExistsByEmailRepository {
   async check(email: string): Promise<boolean> {

@@ -18,3 +18,8 @@ export const serverError = (): HttpResponse => ({
   statusCode: 500,
   body: 'Internal server error',
 })
+
+export const success = <T>(data: T): HttpResponse => ({
+  statusCode: 200,
+  body: data,
+})

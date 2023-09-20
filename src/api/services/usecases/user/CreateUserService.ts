@@ -1,6 +1,9 @@
 import { TUser } from '@domain/types'
 import { ICreateUser } from '@domain/usecases/user'
-import { ICheckUserExistsByEmailRepository, ICreateUserRepository } from '@services/protocols/contracts/database/user'
+import {
+  ICheckUserExistsByEmailRepository,
+  ICreateUserRepository,
+} from '@services/protocols/contracts/database/repositories/user'
 import { IHasher } from '@services/protocols/contracts/hasher'
 
 import { UserAlreadyExistsError } from '../../erros'

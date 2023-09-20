@@ -1,5 +1,5 @@
 import { MongoDBClientSingleton } from '@infra/database/clients'
-import { ICreateUserRepository } from '@services/protocols/contracts/database/user'
+import { ICreateUserRepository } from '@services/protocols/contracts/database/repositories/user'
 import { TUserRepositoryData } from '@services/protocols/types'
 
 export class CreateUserRepositoryMongoDB implements ICreateUserRepository {
