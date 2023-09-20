@@ -1,3 +1,4 @@
+import { IHasher } from '@domain/usecases/cryptography'
 import { IUserUsecase } from '@domain/usecases/user'
 import { IValidator } from '@presentation/adapters/protocols/contracts'
 import { badRequest, created, serverError } from '@presentation/helpers'
@@ -8,6 +9,7 @@ export class SignUpController implements IController {
   constructor(
     private readonly validator: IValidator,
     private readonly userService: IUserUsecase,
+    private readonly hasher: IHasher,
   ) {}
   async handle(httpRequest: SignUpController.Request): Promise<HttpResponse> {
     try {
@@ -15,7 +17,7 @@ export class SignUpController implements IController {
       if (validateRequest.error) {
         return badRequest(validateRequest.error)
       }
-      const createUser = await this.userService.create(httpRequest)
+      const createUser = await this.userService.create(httpRequest, this.hasher)
       if (createUser.error) {
         return badRequest(createUser.error)
       }
