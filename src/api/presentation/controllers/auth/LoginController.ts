@@ -10,7 +10,7 @@ export class LoginController implements IController {
   constructor(
     private readonly validator: IValidator,
     private readonly userService: IUserUsecase,
-    private readonly hasherCompare: IHasher,
+    private readonly hasher: IHasher,
     private readonly tokenGenerator: ITokenGenerator,
   ) {}
   async handle(httpRequest: any): Promise<HttpResponse> {
@@ -24,7 +24,7 @@ export class LoginController implements IController {
     const user = await this.userService.getByEmail(email)
     if (!user) return badRequest(new Error('User not found'))
 
-    const isValidPassword = await this.hasherCompare.compare(password + CONFIG.HASH_PASS_SECRET, user.password)
+    const isValidPassword = await this.hasher.compare(password + CONFIG.HASH_PASS_SECRET, user.password)
     if (!isValidPassword) {
       return badRequest(new Error('Invalid password'))
     }
