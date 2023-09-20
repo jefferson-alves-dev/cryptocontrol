@@ -10,7 +10,7 @@ export const makeLoginController = (): IController => {
   const tokenGenerator = new JwtAdapter()
   const hasher = new BCryptAdapter()
   const userRepository = new UserRepositoryMongoDB()
-  const userService = new UserService(userRepository, hasher)
+  const userService = new UserService(userRepository)
   const validator = new JoiValidatorAdapter(loginValidationSchema)
   return new LoginController(validator, userService, hasher, tokenGenerator)
 }
