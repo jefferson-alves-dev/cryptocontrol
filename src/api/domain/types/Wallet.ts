@@ -8,4 +8,11 @@ export namespace TWallet {
     updatedAt: number | null
     desactivatedAt: number | null
   }
+
+  export type Create = Omit<TWallet.Full, 'id'>
+
+  export type Created = {
+    error: globalThis.Error | null
+    data: { id: string } | null
+  }
 }
