@@ -1,5 +1,5 @@
-export interface IValidator<T> {
-  validate(data: T): Promise<TValidator.Result>
+export interface IValidator {
+  validate(data: any): Promise<TValidator.Result>
 }
 
 export namespace TValidator {

@@ -1,1 +1,1 @@
-export * from './ValidatadorAdapter'
+export * from './validator'

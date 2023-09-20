@@ -10,16 +10,16 @@ import {
 import { UnexpectedKeyError } from '@presentation/errors/UnexpectedKeyError'
 import Joi from 'joi'
 
-import { IValidator, TValidator } from './protocols/contracts/ValidatadorAdapter'
+import { IValidator, TValidator } from './protocols/contracts/validator'
 
-export class JoiValidatorAdapter<T> implements IValidator<T> {
+export class JoiValidatorAdapter implements IValidator {
   private readonly schema: Joi.Schema
 
   constructor(schema: Joi.Schema) {
     this.schema = schema
   }
 
-  async validate(data: T): Promise<TValidator.Result> {
+  async validate(data: any): Promise<TValidator.Result> {
     try {
       await this.schema.validateAsync(data)
       return makeResult()
