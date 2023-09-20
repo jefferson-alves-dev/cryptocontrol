@@ -1,6 +1,6 @@
 import { TUser } from '@domain/types'
 import { MongoDBClientSingleton } from '@infra/database/clients'
-import { IUserRepository } from '@services/protocols/contracts/database/repositories/user'
+import { IUserRepository } from '@services/protocols/contracts/database/repositories'
 import { TUserRepositoryData } from '@services/protocols/types'
 import { ObjectId } from 'mongodb'
 
