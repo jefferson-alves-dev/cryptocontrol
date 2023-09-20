@@ -4,7 +4,7 @@ import { JoiValidatorAdapter } from '@presentation/adapters'
 import { SignUpController } from '@presentation/controllers/auth'
 import { IController } from '@presentation/protocols/contracts'
 import { signupValidationSchema } from '@presentation/validations/schemas/auth'
-import { UserService } from '@services/usecases/user'
+import { UserService } from '@services/usecases/'
 
 export const makeSignupController = (): IController => {
   const userRepository = new UserRepositoryMongoDB()

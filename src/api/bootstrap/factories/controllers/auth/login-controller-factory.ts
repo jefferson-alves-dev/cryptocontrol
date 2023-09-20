@@ -4,7 +4,7 @@ import { JoiValidatorAdapter } from '@presentation/adapters'
 import { LoginController } from '@presentation/controllers/auth'
 import { IController } from '@presentation/protocols/contracts'
 import { loginValidationSchema } from '@presentation/validations/schemas/auth'
-import { UserService } from '@services/usecases/user'
+import { UserService } from '@services/usecases/'
 
 export const makeLoginController = (): IController => {
   const tokenGenerator = new JwtAdapter()
