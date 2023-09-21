@@ -44,4 +44,10 @@ export class UserRepositoryMongoDB implements IUserRepository {
     const newUser = await userCollection.insertOne(data)
     return { id: newUser.insertedId.toHexString() }
   }
+
+  async isUserActive(userID: string): Promise<boolean> {
+    const userCollection = await MongoDBClientSingleton.getCollection('users')
+    const user = await userCollection.findOne({ _id: new ObjectId(userID) })
+    return !!user?.isActive
+  }
 }
