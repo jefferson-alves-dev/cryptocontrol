@@ -5,9 +5,16 @@ import { HttpResponse } from '@presentation/protocols/types'
 
 export class GetAllWalletsControler implements IController {
   constructor(private readonly walletService: IWalletUsecase) {}
-  async handle(): Promise<HttpResponse> {
-    const userID = '123teste'
-    const wallet = await this.walletService.getAll(userID)
+  async handle(httpRequest: GetAllWalletsControler.Request): Promise<HttpResponse> {
+    const wallet = await this.walletService.getAll(httpRequest.userData.userID)
     return success(wallet)
+  }
+}
+
+export namespace GetAllWalletsControler {
+  export type Request = {
+    userData: {
+      [key: string]: string
+    }
   }
 }
