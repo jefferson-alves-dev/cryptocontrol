@@ -6,8 +6,10 @@ export class RouteExpressAdapter {
 
   adapt = async (req: Request, res: Response) => {
     const request = {
-      ...(req.body || {}),
-      ...(req.params || {}),
+      body: { ...(req.body || {}) },
+      params: { ...(req.params || {}) },
+      headers: { ...(req.headers || {}) },
+      userData: { ...(req.userData || {}) },
     }
     const httpResponse = await this.controller.handle(request)
     if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
