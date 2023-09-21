@@ -13,11 +13,11 @@ export class SignUpController implements IController {
   ) {}
   async handle(httpRequest: SignUpController.Request): Promise<HttpResponse> {
     try {
-      const validateRequest = await this.validator.validate(httpRequest)
+      const validateRequest = await this.validator.validate(httpRequest.body)
       if (validateRequest.error) {
         return badRequest(validateRequest.error)
       }
-      const createUser = await this.userService.create(httpRequest, this.hasher)
+      const createUser = await this.userService.create(httpRequest.body, this.hasher)
       if (createUser.error) {
         return badRequest(createUser.error)
       }
@@ -30,9 +30,11 @@ export class SignUpController implements IController {
 
 export namespace SignUpController {
   export type Request = {
-    name: string
-    email: string
-    password: string
-    passwordConfirmation: string
+    body: {
+      name: string
+      email: string
+      password: string
+      passwordConfirmation: string
+    }
   }
 }
