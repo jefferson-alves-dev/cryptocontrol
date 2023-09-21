@@ -13,7 +13,7 @@ export namespace TWallet {
 
   export type Created = {
     error: globalThis.Error | null
-    data: { id: string } | null
+    data: { walletID: string } | null
   }
 
   export type Update = {
