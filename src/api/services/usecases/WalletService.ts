@@ -1,10 +1,20 @@
 import { TWallet } from '@domain/types'
 import { IWalletUsecase } from '@domain/usecases/wallet'
-import { IWalletRepository } from '@services/protocols/contracts/database/repositories'
+import { IUserRepository, IWalletRepository } from '@services/protocols/contracts/database/repositories'
 
 export class WalletService implements IWalletUsecase {
-  constructor(private readonly walletRepository: IWalletRepository) {}
+  constructor(
+    private readonly walletRepository: IWalletRepository,
+    private readonly userRepository: IUserRepository,
+  ) {}
   async create(walletData: TWallet.Create): Promise<TWallet.Created> {
+    const user = await this.userRepository.isUserActive(walletData.userID)
+    if (!user) {
+      return {
+        error: new Error('User not found'),
+        data: null,
+      }
+    }
     const wallet = await this.walletRepository.create({
       userID: walletData.userID,
       name: walletData.name,
@@ -16,7 +26,7 @@ export class WalletService implements IWalletUsecase {
 
     return {
       error: null,
-      data: { id: wallet.id },
+      data: { walletID: wallet.id },
     }
   }
 
