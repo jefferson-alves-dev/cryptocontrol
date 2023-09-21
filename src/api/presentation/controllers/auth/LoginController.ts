@@ -13,13 +13,13 @@ export class LoginController implements IController {
     private readonly hasher: IHasher,
     private readonly tokenGenerator: ITokenGenerator,
   ) {}
-  async handle(httpRequest: any): Promise<HttpResponse> {
-    const validateRequest = await this.validator.validate(httpRequest)
+  async handle(httpRequest: LoginController.Request): Promise<HttpResponse> {
+    const validateRequest = await this.validator.validate(httpRequest.body)
     if (validateRequest.error) {
       return badRequest(validateRequest.error)
     }
 
-    const { email, password } = httpRequest
+    const { email, password } = httpRequest.body
 
     const user = await this.userService.getByEmail(email)
     if (!user) return badRequest(new Error('User not found'))
@@ -29,14 +29,16 @@ export class LoginController implements IController {
       return badRequest(new Error('Invalid password'))
     }
 
-    const token = await this.tokenGenerator.generate({ id: user.id }, CONFIG.TOKEN_SECRET, CONFIG.TOKEN_EXPIRATION)
+    const token = await this.tokenGenerator.generate({ userID: user.id }, CONFIG.TOKEN_SECRET, CONFIG.TOKEN_EXPIRATION)
     return success({ token })
   }
 }
 
 export namespace LoginController {
   export type Request = {
-    email: string
-    password: string
+    body: {
+      email: string
+      password: string
+    }
   }
 }
