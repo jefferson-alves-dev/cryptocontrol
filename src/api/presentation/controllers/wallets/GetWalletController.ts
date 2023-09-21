@@ -10,18 +10,25 @@ export class GetWalletController implements IController {
     private readonly walletService: IWalletUsecase,
   ) {}
   async handle(httpRequest: GetWalletController.Request): Promise<HttpResponse> {
-    const validate = await this.validator.validate(httpRequest)
+    const validate = await this.validator.validate(httpRequest.params)
     if (validate.error) {
       return badRequest(validate.error)
     }
-    const userID = '123teste'
-    const wallet = await this.walletService.getById(httpRequest.walletID, userID)
+    const wallet = await this.walletService.getById(httpRequest.params.walletID, httpRequest.userData.userID)
     return success(wallet)
   }
 }
 
 export namespace GetWalletController {
   export type Request = {
-    walletID: string
+    userData: {
+      [key: string]: string
+    }
+    params: {
+      walletID: string
+    }
+    body: {
+      [key: string]: string
+    }
   }
 }
