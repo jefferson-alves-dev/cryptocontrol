@@ -1,3 +1,4 @@
+import { authMiddleware } from '@bootstrap/middlewares'
 import { Router } from 'express'
 
 import authRoutes from './auth.routes'
@@ -11,7 +12,7 @@ const router = Router()
 router.use('/auth', authRoutes)
 router.use('/deposits', depositsRoutes)
 router.use('/users', usersRoutes)
-router.use('/wallets', walletsRoutes)
+router.use('/wallets', authMiddleware, walletsRoutes)
 router.use('/withdrawals', withdrawalsRoutes)
 
 export default router
