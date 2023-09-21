@@ -15,11 +15,16 @@ export class CreateWalletController implements IController {
       return badRequest(validate.error)
     }
 
-    const wallet = await this.walletService.create({
+    const createWallet = await this.walletService.create({
       name: httpRequest.body.name,
       userID: httpRequest.userData.userID,
     })
-    return success(wallet)
+
+    if (createWallet.error) {
+      return badRequest(createWallet.error)
+    }
+
+    return success(createWallet.data)
   }
 }
 
