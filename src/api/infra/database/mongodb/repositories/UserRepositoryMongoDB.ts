@@ -1,13 +1,15 @@
-import { TUser } from '@domain/types'
 import { MongoDBClientSingleton } from '@infra/database/clients'
 import { IUserRepository } from '@services/protocols/contracts/database/repositories'
 import { TUserRepositoryData } from '@services/protocols/types'
 import { ObjectId } from 'mongodb'
 
 export class UserRepositoryMongoDB implements IUserRepository {
-  async getByEmail(email: string): Promise<TUser.Full | null> {
+  async getByEmail(email: string): Promise<TUserRepositoryData.UserInfos | null> {
     const userCollection = await MongoDBClientSingleton.getCollection('users')
-    const user = await userCollection.findOne({ email })
+    const user = await userCollection.findOne(
+      { email, isActive: true },
+      { projection: { _id: 1, name: 1, email: 1, password: 1 } },
+    )
     if (!user) return null
     const { _id } = user
     return {
@@ -15,16 +17,15 @@ export class UserRepositoryMongoDB implements IUserRepository {
       name: user.name,
       email: user.email,
       password: user.password,
-      createdAt: user.createdAt,
-      isActive: user.isActive,
-      updatedAt: user.updatedAt,
-      desactivatedAt: user.desactivatedAt,
     }
   }
 
-  async getById(id: string): Promise<TUser.Full | null> {
+  async getById(id: string): Promise<TUserRepositoryData.UserInfos | null> {
     const userCollection = await MongoDBClientSingleton.getCollection('users')
-    const user = await userCollection.findOne({ _id: new ObjectId(id) })
+    const user = await userCollection.findOne(
+      { _id: new ObjectId(id), isActive: true },
+      { projection: { _id: 1, name: 1, email: 1 } },
+    )
     if (!user) return null
     const { _id } = user
     return {
@@ -32,10 +33,6 @@ export class UserRepositoryMongoDB implements IUserRepository {
       name: user.name,
       email: user.email,
       password: user.password,
-      createdAt: user.createdAt,
-      isActive: user.isActive,
-      updatedAt: user.updatedAt,
-      desactivatedAt: user.desactivatedAt,
     }
   }
 
@@ -47,7 +44,7 @@ export class UserRepositoryMongoDB implements IUserRepository {
 
   async isUserActive(userID: string): Promise<boolean> {
     const userCollection = await MongoDBClientSingleton.getCollection('users')
-    const user = await userCollection.findOne({ _id: new ObjectId(userID) })
+    const user = await userCollection.findOne({ _id: new ObjectId(userID) }, { projection: { isActive: 1 } })
     return !!user?.isActive
   }
 }
