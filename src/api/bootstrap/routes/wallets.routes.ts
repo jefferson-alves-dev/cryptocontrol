@@ -1,6 +1,7 @@
 import { RouteExpressAdapter } from '@bootstrap/adapters'
 import {
   makeCreateWalletController,
+  makeDeleteWalletController,
   makeGetAllWalletsController,
   makeGetWalletController,
 } from '@bootstrap/factories/controllers/wallets'
@@ -22,12 +23,6 @@ route.put('/:id', async (req: Request, res: Response) => {
   return res.status(201).json({ message: id, verbal: 'put' })
 })
 
-route.delete('/:id', async (req: Request, res: Response) => {
-  const { id } = req.params
-  if (!id) {
-    return res.status(400).json({ message: 'Wallet id is required' })
-  }
-  return res.status(201).json({ message: id, verbal: 'deleted' })
-})
+route.delete('/:walletID', new RouteExpressAdapter(makeDeleteWalletController()).adapt)
 
 export default route
