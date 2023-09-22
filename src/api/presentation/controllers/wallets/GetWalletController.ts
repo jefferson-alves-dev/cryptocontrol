@@ -1,6 +1,6 @@
 import { IWalletUsecase } from '@domain/usecases/wallet'
 import { IValidator } from '@presentation/adapters/protocols/contracts'
-import { badRequest, success } from '@presentation/helpers'
+import { badRequest, notFound, success } from '@presentation/helpers'
 import { IController } from '@presentation/protocols/contracts'
 import { HttpResponse } from '@presentation/protocols/types'
 
@@ -14,7 +14,11 @@ export class GetWalletController implements IController {
     if (validate.error) {
       return badRequest(validate.error)
     }
+
     const wallet = await this.walletService.getById(httpRequest.params.walletID, httpRequest.userData.userID)
+
+    if (!wallet) return notFound(new Error('Wallet not found'))
+
     return success(wallet)
   }
 }
