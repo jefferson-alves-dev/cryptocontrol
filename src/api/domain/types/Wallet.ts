@@ -16,6 +16,11 @@ export namespace TWallet {
     data: { walletID: string } | null
   }
 
+  export type Deleted = {
+    error: globalThis.Error | null
+    data: { [key: string]: any } | null
+  }
+
   export type Update = {
     userID: string
     name: string
