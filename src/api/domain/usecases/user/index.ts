@@ -9,5 +9,10 @@ export interface IUserUsecase {
 }
 
 export namespace TUserUsecase {
-  export type Result = TUser.Full | null
+  export type Result = {
+    id: string
+    name: string
+    email: string
+    password: string
+  } | null
 }
