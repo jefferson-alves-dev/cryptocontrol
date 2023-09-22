@@ -9,6 +9,13 @@ export namespace TUserRepositoryData {
     desactivatedAt: null
   }
 
+  export type UserInfos = {
+    id: string
+    name: string
+    email: string
+    password: string
+  }
+
   export type Created = {
     id: string
   }
