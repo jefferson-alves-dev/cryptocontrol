@@ -11,7 +11,7 @@ export class MongoDBClientSingleton {
 
   private constructor() {}
 
-  private static async getInstance(): Promise<MongoClient> {
+  public static async getInstance(): Promise<MongoClient> {
     if (!MongoDBClientSingleton._instance) {
       try {
         const client = new MongoClient(this.uri, {
