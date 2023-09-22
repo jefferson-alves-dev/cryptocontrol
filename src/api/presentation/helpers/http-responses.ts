@@ -5,8 +5,17 @@ export const badRequest = (error: Error): HttpResponse => ({
   body: error,
 })
 
+export const notFound = (error: Error): HttpResponse => ({
+  statusCode: 404,
+  body: error,
+})
+
 export const created = (): Omit<HttpResponse, 'body'> => ({
   statusCode: 201,
+})
+
+export const noContent = (): Omit<HttpResponse, 'body'> => ({
+  statusCode: 204,
 })
 
 export const conflict = (error: Error): HttpResponse => ({
