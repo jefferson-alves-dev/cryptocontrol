@@ -17,9 +17,10 @@
       "@services/*": ["src/api/services/*"],
       "@infra/*": ["src/api/infra/*"],
       "@config/*": ["src/api/config/*"],
-      "@domain/*": ["src/api/domain/*"]
+      "@domain/*": ["src/api/domain/*"],
+      "@tests/*": ["./tests/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "tests"],
   "exclude": ["node_modules"]
 }
