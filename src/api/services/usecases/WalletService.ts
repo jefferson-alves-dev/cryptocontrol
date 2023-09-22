@@ -40,9 +40,25 @@ export class WalletService implements IWalletUsecase {
     return wallets || null
   }
 
-  async deleteById(walletID: string, userID: string): Promise<void> {
-    await this.walletRepository.deleteById(walletID, userID)
-    return
+  async deleteById(walletID: string, userID: string): Promise<TWallet.Deleted> {
+    const user = await this.userRepository.isUserActive(userID)
+    if (!user) {
+      return {
+        error: new Error('User not found'),
+        data: null,
+      }
+    }
+    const deletedWallet = await this.walletRepository.deleteById(walletID, userID)
+    if (deletedWallet < 1) {
+      return {
+        error: new Error('Wallet not found'),
+        data: null,
+      }
+    }
+    return {
+      error: null,
+      data: { walletID },
+    }
   }
 
   async updateById(walletID: string, walletData: TWallet.Update): Promise<void> {
