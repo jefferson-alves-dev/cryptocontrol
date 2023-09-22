@@ -5,5 +5,5 @@ export interface IWalletRepository {
   getAll(userID: string): Promise<TWalletRespository.Full[]>
   create(walletData: TWalletRespository.Create): Promise<TWalletRespository.Created>
   updateById(walletID: string, walletData: TWalletRespository.Update): Promise<void>
-  deleteById(walletID: string, userID: string): Promise<void>
+  deleteById(walletID: string, userID: string): Promise<number>
 }
