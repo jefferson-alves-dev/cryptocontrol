@@ -12,7 +12,7 @@ export class WalletRepositoryMongoDB implements IWalletRepository {
 
   async getById(walletID: string, userID: string): Promise<TWalletRespository.Full | null> {
     const walletCollection = await MongoDBClientSingleton.getCollection('wallets')
-    const wallet = await walletCollection.findOne({ _id: new ObjectId(walletID), userID })
+    const wallet = await walletCollection.findOne({ _id: new ObjectId(walletID), userID, isActive: true })
     if (!wallet) return null
 
     const { _id } = wallet
@@ -28,15 +28,19 @@ export class WalletRepositoryMongoDB implements IWalletRepository {
     }
   }
 
-  async deleteById(walletID: string, userID: string): Promise<void> {
+  async deleteById(walletID: string, userID: string): Promise<number> {
     const walletCollection = await MongoDBClientSingleton.getCollection('wallets')
-    await walletCollection.deleteOne({ _id: new ObjectId(walletID), userID })
-    return
+    const deleteWallet = await walletCollection.updateOne(
+      { _id: new ObjectId(walletID), userID, isActive: true },
+      { $set: { isActive: false, desactivatedAt: new Date().getTime() } },
+    )
+
+    return deleteWallet.modifiedCount
   }
 
   async getAll(userID: string): Promise<TWalletRespository.Full[]> {
     const walletCollection = await MongoDBClientSingleton.getCollection('wallets')
-    const wallets = await walletCollection.find({ userID }).toArray()
+    const wallets = await walletCollection.find({ userID, isActive: true }).toArray()
     return wallets.map((wallet) => ({
       id: wallet._id.toHexString(),
       userID: wallet.userID,
