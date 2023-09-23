@@ -1,21 +1,25 @@
 import { TUserUsecase } from '@domain/usecases/user'
 import { faker } from '@faker-js/faker'
 import { UserService } from '@services/usecases'
+import { HasherSpy } from '@tests/unit/infra/mock'
 
 import { UserRepositorySpy } from '../mocks'
 
 type SutTypes = {
   sut: UserService
   userRepository: UserRepositorySpy
+  hasherSpy: HasherSpy
 }
 
 const makeSut = (): SutTypes => {
   const userRepository = new UserRepositorySpy()
+  const hasherSpy = new HasherSpy()
   const sut = new UserService(userRepository)
 
   return {
     sut,
     userRepository,
+    hasherSpy,
   }
 }
 
@@ -77,6 +81,15 @@ describe('UserService UseCases', () => {
       const result = await sut.getById(fakeUser.id)
       expect(result).toEqual(fakeUser)
       expect(result?.id).toBe(fakeUser.id)
+    })
+  })
+
+  describe('create()', () => {
+    it('should call userRepository.getByEmail() with correct email', async () => {
+      const { sut, userRepository, hasherSpy } = makeSut()
+      const { name, email, password } = makeFakerUser()
+      await sut.create({ name, email, password }, hasherSpy)
+      expect(userRepository.email).toBe(email)
     })
   })
 })
