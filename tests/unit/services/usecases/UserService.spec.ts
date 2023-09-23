@@ -1,3 +1,5 @@
+import { TUserUsecase } from '@domain/usecases/user'
+import { faker } from '@faker-js/faker'
 import { UserService } from '@services/usecases'
 
 import { UserRepositorySpy } from '../mocks'
@@ -17,36 +19,38 @@ const makeSut = (): SutTypes => {
   }
 }
 
+type TUserWithoutNull = Exclude<TUserUsecase.Result, null>
+const makeFakerUser = (): TUserWithoutNull => ({
+  id: faker.string.alphanumeric(24),
+  name: faker.person.fullName(),
+  email: faker.internet.email(),
+  password: faker.internet.password({ length: 10 }),
+})
+
 describe('UserService UseCases', () => {
   describe('getByEmail()', () => {
     it('should call userRepository.getByEmail() with correct email', async () => {
       const { sut, userRepository } = makeSut()
-      await sut.getByEmail('valid-email@mail.com')
-      expect(userRepository.email).toBe('valid-email@mail.com')
+      const fakeEmail = makeFakerUser().email
+      await sut.getByEmail(fakeEmail)
+      expect(userRepository.email).toBe(fakeEmail)
     })
 
     it('should return null if userRepository.getByEmail() returns null', async () => {
       const { sut, userRepository } = makeSut()
       userRepository.resultGetByEmail = null
-      const result = await sut.getByEmail('invalid-email@mail.com')
+      const fakeEmail = makeFakerUser().email
+      const result = await sut.getByEmail(fakeEmail)
       expect(result).toBe(null)
     })
 
     it('should return a user if userRepository.getByEmail() returns a user', async () => {
       const { sut, userRepository } = makeSut()
-      userRepository.resultGetByEmail = {
-        id: 'valid-id',
-        name: 'valid-name',
-        email: 'valid-email',
-        password: 'valid-password',
-      }
-      const result = await sut.getByEmail('valid-email@mail.com')
-      expect(result).toEqual({
-        id: 'valid-id',
-        name: 'valid-name',
-        email: 'valid-email',
-        password: 'valid-password',
-      })
+      const fakeUser = makeFakerUser()
+      userRepository.resultGetByEmail = fakeUser
+      const result = await sut.getByEmail(fakeUser.email)
+      expect(result).toEqual(fakeUser)
+      expect(result?.email).toBe(fakeUser.email)
     })
   })
 })
