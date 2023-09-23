@@ -4,6 +4,7 @@ import { UserAlreadyExistsError } from '@services/erros'
 import { UserService } from '@services/usecases'
 import { throwError } from '@tests/helpers'
 import { HasherSpy } from '@tests/unit/infra/mock'
+import MockDate from 'mockdate'
 
 import { UserRepositorySpy } from '../mocks'
 
@@ -34,6 +35,14 @@ const makeFakerUser = (): TUserWithoutNull => ({
 })
 
 describe('UserService UseCases', () => {
+  beforeAll(() => {
+    MockDate.set(new Date().getTime())
+  })
+
+  afterAll(() => {
+    MockDate.reset()
+  })
+
   describe('getByEmail()', () => {
     it('should call userRepository.getByEmail() with correct email', async () => {
       const { sut, userRepository } = makeSut()
