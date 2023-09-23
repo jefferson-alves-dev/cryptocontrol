@@ -2,6 +2,7 @@ import { TUserUsecase } from '@domain/usecases/user'
 import { faker } from '@faker-js/faker'
 import { UserAlreadyExistsError } from '@services/erros'
 import { UserService } from '@services/usecases'
+import { throwError } from '@tests/helpers'
 import { HasherSpy } from '@tests/unit/infra/mock'
 
 import { UserRepositorySpy } from '../mocks'
@@ -133,6 +134,15 @@ describe('UserService UseCases', () => {
       const result = await sut.create({ name, email, password }, hasherSpy)
       expect(typeof result.data?.id).toBe('string')
       expect(result.error).toBe(null)
+    })
+  })
+
+  describe('throws', () => {
+    it('should throw if userRepository.getByEmail() throws', async () => {
+      const { sut, userRepository } = makeSut()
+      jest.spyOn(userRepository, 'getByEmail').mockImplementationOnce(throwError)
+      const promise = sut.getByEmail(makeFakerUser().email)
+      await expect(promise).rejects.toThrow()
     })
   })
 })
