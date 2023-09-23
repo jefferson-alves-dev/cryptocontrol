@@ -121,5 +121,18 @@ describe('UserService UseCases', () => {
         desactivatedAt: null,
       })
     })
+
+    it('should return correct result on userRepository.create() success', async () => {
+      const { sut, userRepository, hasherSpy } = makeSut()
+      const fakeUseData = makeFakerUser()
+      const { name, email, password } = fakeUseData
+      userRepository.resultGetByEmail = null
+      userRepository.resultCreate = {
+        id: faker.string.alphanumeric(24),
+      }
+      const result = await sut.create({ name, email, password }, hasherSpy)
+      expect(typeof result.data?.id).toBe('string')
+      expect(result.error).toBe(null)
+    })
   })
 })
