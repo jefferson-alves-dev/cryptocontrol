@@ -53,4 +53,13 @@ describe('UserService UseCases', () => {
       expect(result?.email).toBe(fakeUser.email)
     })
   })
+
+  describe('getById()', () => {
+    it('should call userRepository.getById() with correct userID', async () => {
+      const { sut, userRepository } = makeSut()
+      const fakerUserID = makeFakerUser().id
+      await sut.getById(fakerUserID)
+      expect(userRepository.id).toBe(fakerUserID)
+    })
+  })
 })

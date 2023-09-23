@@ -6,13 +6,13 @@ import { IUserRepository } from '@services/protocols/contracts/database/reposito
 
 export class UserService implements IUserUsecase {
   constructor(private readonly userRepository: IUserRepository) {}
-  async getByEmail(email: string): Promise<TUserUsecase.Result> {
-    const user = await this.userRepository.getByEmail(email)
+  async getByEmail(userEmail: string): Promise<TUserUsecase.Result> {
+    const user = await this.userRepository.getByEmail(userEmail)
     return user || null
   }
 
-  async getById(id: string): Promise<TUserUsecase.Result> {
-    const user = await this.userRepository.getById(id)
+  async getById(userID: string): Promise<TUserUsecase.Result> {
+    const user = await this.userRepository.getById(userID)
     return user || null
   }
 
