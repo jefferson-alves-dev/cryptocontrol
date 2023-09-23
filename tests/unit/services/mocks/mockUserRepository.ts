@@ -20,12 +20,7 @@ export class UserRepositorySpy implements IUserRepository {
     name: '',
     password: '',
   }
-  resultGetByEmail: TUserRepositoryData.UserInfos | null = {
-    id: '',
-    email: '',
-    name: '',
-    password: '',
-  }
+  resultGetByEmail: TUserRepositoryData.UserInfos | null = null
   resultCreate: TUserRepositoryData.Created = {
     id: '',
   }
