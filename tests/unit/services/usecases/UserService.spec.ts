@@ -1,5 +1,6 @@
 import { TUserUsecase } from '@domain/usecases/user'
 import { faker } from '@faker-js/faker'
+import { UserAlreadyExistsError } from '@services/erros'
 import { UserService } from '@services/usecases'
 import { HasherSpy } from '@tests/unit/infra/mock'
 
@@ -90,6 +91,17 @@ describe('UserService UseCases', () => {
       const { name, email, password } = makeFakerUser()
       await sut.create({ name, email, password }, hasherSpy)
       expect(userRepository.email).toBe(email)
+    })
+
+    it('should return correct result if userRepository.getByEmail() returns a user', async () => {
+      const { sut, userRepository, hasherSpy } = makeSut()
+      const fakeUseData = makeFakerUser()
+      const { name, email, password } = fakeUseData
+      userRepository.resultGetByEmail = fakeUseData
+      const result = await sut.create({ name, email, password }, hasherSpy)
+      expect(result.error).toEqual(new UserAlreadyExistsError())
+      expect(result.error?.message).toBe('User already exists')
+      expect(result.data).toBe(null)
     })
   })
 })
