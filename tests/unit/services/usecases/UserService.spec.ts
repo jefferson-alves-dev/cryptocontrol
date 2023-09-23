@@ -103,5 +103,23 @@ describe('UserService UseCases', () => {
       expect(result.error?.message).toBe('User already exists')
       expect(result.data).toBe(null)
     })
+
+    it('should call userRepository.create() with correct values', async () => {
+      const { sut, userRepository, hasherSpy } = makeSut()
+      const fakeUseData = makeFakerUser()
+      const { name, email, password } = fakeUseData
+      userRepository.resultGetByEmail = null
+      await sut.create({ name, email, password }, hasherSpy)
+      const hashedPassword = await hasherSpy.hash(password)
+      expect(userRepository.data).toEqual({
+        name,
+        email,
+        password: hashedPassword,
+        isActive: true,
+        createdAt: new Date().getTime(),
+        updatedAt: null,
+        desactivatedAt: null,
+      })
+    })
   })
 })

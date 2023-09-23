@@ -4,7 +4,7 @@ export class HasherSpy implements IHasher {
   textPlain: string = ''
   _hash: string = ''
   compareResult: boolean = true
-  hashResult: string = ''
+  hashResult: string = 'hashedPassword'
   async compare(textPlain: string, hash: string): Promise<boolean> {
     this.textPlain = textPlain
     this._hash = hash
