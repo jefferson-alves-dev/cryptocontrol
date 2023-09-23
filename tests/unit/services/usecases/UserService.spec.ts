@@ -31,5 +31,22 @@ describe('UserService UseCases', () => {
       const result = await sut.getByEmail('invalid-email@mail.com')
       expect(result).toBe(null)
     })
+
+    it('should return a user if userRepository.getByEmail() returns a user', async () => {
+      const { sut, userRepository } = makeSut()
+      userRepository.resultGetByEmail = {
+        id: 'valid-id',
+        name: 'valid-name',
+        email: 'valid-email',
+        password: 'valid-password',
+      }
+      const result = await sut.getByEmail('valid-email@mail.com')
+      expect(result).toEqual({
+        id: 'valid-id',
+        name: 'valid-name',
+        email: 'valid-email',
+        password: 'valid-password',
+      })
+    })
   })
 })
