@@ -159,5 +159,13 @@ describe('UserService UseCases', () => {
       const promise = sut.create({ name, email, password }, hasherSpy)
       await expect(promise).rejects.toThrow()
     })
+
+    it('should throw if hasher.hash() throws', async () => {
+      const { sut, hasherSpy } = makeSut()
+      jest.spyOn(hasherSpy, 'hash').mockImplementationOnce(throwError)
+      const { name, email, password } = makeFakerUser()
+      const promise = sut.create({ name, email, password }, hasherSpy)
+      await expect(promise).rejects.toThrow()
+    })
   })
 })
