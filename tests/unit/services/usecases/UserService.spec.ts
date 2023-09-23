@@ -144,5 +144,12 @@ describe('UserService UseCases', () => {
       const promise = sut.getByEmail(makeFakerUser().email)
       await expect(promise).rejects.toThrow()
     })
+
+    it('should throw if userRepository.getById() throws', async () => {
+      const { sut, userRepository } = makeSut()
+      jest.spyOn(userRepository, 'getById').mockImplementationOnce(throwError)
+      const promise = sut.getById(makeFakerUser().email)
+      await expect(promise).rejects.toThrow()
+    })
   })
 })
