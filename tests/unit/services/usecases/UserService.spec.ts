@@ -69,5 +69,14 @@ describe('UserService UseCases', () => {
       const result = await sut.getById(fakerUserID)
       expect(result).toBe(null)
     })
+
+    it('should return a user if userRepository.getById() returns a user', async () => {
+      const { sut, userRepository } = makeSut()
+      const fakeUser = makeFakerUser()
+      userRepository.resultGetById = fakeUser
+      const result = await sut.getById(fakeUser.id)
+      expect(result).toEqual(fakeUser)
+      expect(result?.id).toBe(fakeUser.id)
+    })
   })
 })
