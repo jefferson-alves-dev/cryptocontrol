@@ -94,6 +94,15 @@ describe('WalletService UseCases', () => {
       expect(walletRepositorySpy.walletID).toBe(walletID)
       expect(walletRepositorySpy.userID).toBe(userID)
     })
+
+    it('should return null if walletRepository.getById() returns null', async () => {
+      const { sut, walletRepositorySpy } = makeSut()
+      const walletID = faker.string.uuid()
+      const userID = faker.string.uuid()
+      walletRepositorySpy.resultGetById = null
+      const result = await sut.getById(walletID, userID)
+      expect(result).toBe(null)
+    })
   })
 
   describe('getAll()', () => {})
