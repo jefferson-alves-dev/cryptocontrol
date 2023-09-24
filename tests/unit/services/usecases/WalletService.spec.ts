@@ -68,6 +68,21 @@ describe('WalletService UseCases', () => {
         desactivatedAt: null,
       })
     })
+
+    it('should return correct result on walletRepository.create() success', async () => {
+      const { sut, walletRepositorySpy } = makeSut()
+      const walletData = makeFakeWalletData()
+      const walletID = faker.string.alphanumeric(24)
+      walletRepositorySpy.resultCreate = {
+        id: walletID,
+      }
+      const result = await sut.create(walletData)
+      expect(result.error).toEqual(null)
+      expect(result.data).toEqual({
+        walletID: walletID,
+      })
+      expect(result.data?.walletID.length).toBe(24)
+    })
   })
 
   describe('getById()', () => {})
