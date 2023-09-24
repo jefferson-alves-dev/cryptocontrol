@@ -28,6 +28,16 @@ const makeFakeWalletData = (): TWallet.Create => ({
   userID: faker.string.alphanumeric(24),
 })
 
+const makeFullWalletData = (): TWallet.Full => ({
+  id: faker.string.alphanumeric(24),
+  userID: faker.string.alphanumeric(24),
+  name: faker.word.words(3),
+  isActive: true,
+  createdAt: faker.date.past().getTime(),
+  updatedAt: null,
+  desactivatedAt: null,
+})
+
 describe('WalletService UseCases', () => {
   beforeAll(() => {
     MockDate.set(new Date().getTime())
@@ -102,6 +112,24 @@ describe('WalletService UseCases', () => {
       walletRepositorySpy.resultGetById = null
       const result = await sut.getById(walletID, userID)
       expect(result).toBe(null)
+    })
+
+    it('should return an wallet if walletRepository.getById() returns an wallet', async () => {
+      const { sut, walletRepositorySpy } = makeSut()
+      const walletID = faker.string.uuid()
+      const userID = faker.string.uuid()
+      walletRepositorySpy.resultGetById = makeFullWalletData()
+      const result = await sut.getById(walletID, userID)
+      expect(typeof result?.id).toBe('string')
+      expect(result?.id.length).toBeGreaterThan(0)
+      expect(typeof result?.userID).toBe('string')
+      expect(result?.userID.length).toBeGreaterThan(0)
+      expect(typeof result?.name).toBe('string')
+      expect(result?.name.length).toBeGreaterThan(0)
+      expect(typeof result?.isActive).toBe('boolean')
+      expect(typeof result?.createdAt).toBe('number')
+      expect(result?.updatedAt).toBe(null)
+      expect(result?.desactivatedAt).toBe(null)
     })
   })
 
