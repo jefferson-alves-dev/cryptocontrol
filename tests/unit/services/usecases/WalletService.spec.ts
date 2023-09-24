@@ -44,6 +44,16 @@ describe('WalletService UseCases', () => {
       await sut.create(walletData)
       expect(userRepositorySpy.userID).toBe(walletData.userID)
     })
+
+    it('should return correct result if userRepository.isUserActive() returns false', async () => {
+      const { sut, userRepositorySpy } = makeSut()
+      const walletData = makeFakeWalletData()
+      userRepositorySpy.resultIsUserActive = false
+      const result = await sut.create(walletData)
+      expect(result.error).toEqual(new Error('User not found'))
+      expect(result.error?.message).toBe('User not found')
+      expect(result.data).toEqual(null)
+    })
   })
 
   describe('getById()', () => {})
