@@ -196,6 +196,14 @@ describe('WalletService UseCases', () => {
       expect(walletRepositorySpy.walletID).toBe(walletData.id)
       expect(walletRepositorySpy.userID).toBe(walletData.userID)
     })
+
+    it('should return correct result if walletRepository.deleteById() a number less than 1', async () => {
+      const { sut, walletRepositorySpy } = makeSut()
+      walletRepositorySpy.resultDeleteById = 0
+      const walletData = makeFullWalletData()
+      const result = await sut.deleteById(walletData.id, walletData.userID)
+      expect(result).toEqual({ data: null, error: new Error('Wallet not found') })
+    })
   })
 
   describe('updateById()', () => {})

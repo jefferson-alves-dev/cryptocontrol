@@ -17,7 +17,7 @@ export class WalletRepositorySpy implements IWalletRepository {
   }
   resultGetById: TWalletRespository.Full | null = null
   resultGetAll: TWalletRespository.Full[] = []
-  resultDeleteById: number = 0
+  resultDeleteById: number = 1
   resultUpdateById: void = undefined
   async create(walletData: TWalletRespository.Create): Promise<TWalletRespository.Created> {
     this.walletData = walletData
