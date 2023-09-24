@@ -140,6 +140,13 @@ describe('WalletService UseCases', () => {
       await sut.getAll(userID)
       expect(walletRepositorySpy.userID).toBe(userID)
     })
+
+    it('should return an empty array if walletRepository.getAll() returns an empty array', async () => {
+      const { sut } = makeSut()
+      const userID = faker.string.uuid()
+      const result = await sut.getAll(userID)
+      expect(result).toEqual([])
+    })
   })
 
   describe('deleteById()', () => {})
