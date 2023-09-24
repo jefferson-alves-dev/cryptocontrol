@@ -214,7 +214,16 @@ describe('WalletService UseCases', () => {
     })
   })
 
-  describe('updateById()', () => {})
+  describe('updateById()', () => {
+    it('should call walletRepository.updateById() with correct values', async () => {
+      const { sut, walletRepositorySpy } = makeSut()
+      const walletData = makeFullWalletData()
+      const newWalletData = makeFullWalletData()
+      await sut.updateById(walletData.id, newWalletData)
+      expect(walletRepositorySpy.walletID).toBe(walletData.id)
+      expect(walletRepositorySpy.walletData).toEqual(newWalletData)
+    })
+  })
 
   describe('throws', () => {
     it('should throw if userRepository.isUserActive() throws', async () => {
