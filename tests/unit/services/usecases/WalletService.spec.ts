@@ -133,7 +133,14 @@ describe('WalletService UseCases', () => {
     })
   })
 
-  describe('getAll()', () => {})
+  describe('getAll()', () => {
+    it('should call walletRepository.getAll() with correct values', async () => {
+      const { sut, walletRepositorySpy } = makeSut()
+      const userID = faker.string.uuid()
+      await sut.getAll(userID)
+      expect(walletRepositorySpy.userID).toBe(userID)
+    })
+  })
 
   describe('deleteById()', () => {})
 
