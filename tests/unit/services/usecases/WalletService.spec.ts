@@ -147,6 +147,30 @@ describe('WalletService UseCases', () => {
       const result = await sut.getAll(userID)
       expect(result).toEqual([])
     })
+
+    it('should return a list of wallets if walletRepository.getAll() returns an array with wallets', async () => {
+      const { sut, walletRepositorySpy } = makeSut()
+      const userID = faker.string.uuid()
+      const expectedWallets = [makeFullWalletData(), makeFullWalletData()]
+      walletRepositorySpy.resultGetAll = [...expectedWallets]
+      const result = await sut.getAll(userID)
+      expect(Array.isArray(result)).toBe(true)
+      const isValidWallet = (wallet: TWallet.Full) => {
+        return (
+          typeof wallet.id === 'string' &&
+          wallet.id.length > 0 &&
+          typeof wallet.userID === 'string' &&
+          wallet.userID.length > 0 &&
+          typeof wallet.name === 'string' &&
+          wallet.name.length > 0 &&
+          typeof wallet.isActive === 'boolean' &&
+          typeof wallet.createdAt === 'number' &&
+          wallet.updatedAt === null &&
+          wallet.desactivatedAt === null
+        )
+      }
+      expect(result?.every(isValidWallet)).toBe(true)
+    })
   })
 
   describe('deleteById()', () => {})
