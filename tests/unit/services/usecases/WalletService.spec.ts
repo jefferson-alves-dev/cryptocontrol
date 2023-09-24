@@ -204,6 +204,14 @@ describe('WalletService UseCases', () => {
       const result = await sut.deleteById(walletData.id, walletData.userID)
       expect(result).toEqual({ data: null, error: new Error('Wallet not found') })
     })
+
+    it('should return correct result if walletRepository.deleteById() a number greater or equal than 1', async () => {
+      const { sut, walletRepositorySpy } = makeSut()
+      walletRepositorySpy.resultDeleteById = 1
+      const walletData = makeFullWalletData()
+      const result = await sut.deleteById(walletData.id, walletData.userID)
+      expect(result).toEqual({ data: { walletID: walletData.id }, error: null })
+    })
   })
 
   describe('updateById()', () => {})
