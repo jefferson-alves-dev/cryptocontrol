@@ -101,5 +101,13 @@ describe('WalletService UseCases', () => {
       const promise = sut.create(walletData)
       await expect(promise).rejects.toThrow()
     })
+
+    it('should throw if walletRepository.create() throws', async () => {
+      const { sut, walletRepositorySpy } = makeSut()
+      jest.spyOn(walletRepositorySpy, 'create').mockImplementationOnce(throwError)
+      const walletData = makeFakeWalletData()
+      const promise = sut.create(walletData)
+      await expect(promise).rejects.toThrow()
+    })
   })
 })
