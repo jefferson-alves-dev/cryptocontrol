@@ -85,7 +85,16 @@ describe('WalletService UseCases', () => {
     })
   })
 
-  describe('getById()', () => {})
+  describe('getById()', () => {
+    it('should call walletRepository.getById() with correct values', async () => {
+      const { sut, walletRepositorySpy } = makeSut()
+      const walletID = faker.string.uuid()
+      const userID = faker.string.uuid()
+      await sut.getById(walletID, userID)
+      expect(walletRepositorySpy.walletID).toBe(walletID)
+      expect(walletRepositorySpy.userID).toBe(userID)
+    })
+  })
 
   describe('getAll()', () => {})
 
