@@ -223,6 +223,14 @@ describe('WalletService UseCases', () => {
       expect(walletRepositorySpy.walletID).toBe(walletData.id)
       expect(walletRepositorySpy.walletData).toEqual(newWalletData)
     })
+
+    it('should return void on walletRepository.updateById() success', async () => {
+      const { sut } = makeSut()
+      const walletData = makeFullWalletData()
+      const newWalletData = makeFullWalletData()
+      const result = await sut.updateById(walletData.id, newWalletData)
+      expect(result).toBeUndefined()
+    })
   })
 
   describe('throws', () => {
@@ -256,6 +264,16 @@ describe('WalletService UseCases', () => {
       const userID = faker.string.uuid()
       jest.spyOn(walletRepositorySpy, 'getAll').mockImplementationOnce(throwError)
       const promise = sut.getAll(userID)
+      await expect(promise).rejects.toThrow()
+    })
+
+    it('should throw if walletRepository.updateById() throws', async () => {
+      const { sut, walletRepositorySpy } = makeSut()
+      const walletData = makeFullWalletData()
+      const newWalletData = makeFullWalletData()
+      await sut.updateById(walletData.id, newWalletData)
+      jest.spyOn(walletRepositorySpy, 'updateById').mockImplementationOnce(throwError)
+      const promise = sut.updateById(walletData.id, newWalletData)
       await expect(promise).rejects.toThrow()
     })
   })
