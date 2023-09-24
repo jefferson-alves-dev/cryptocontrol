@@ -54,6 +54,20 @@ describe('WalletService UseCases', () => {
       expect(result.error?.message).toBe('User not found')
       expect(result.data).toEqual(null)
     })
+
+    it('should call walletRepository.create() with correct walletData', async () => {
+      const { sut, walletRepositorySpy } = makeSut()
+      const walletData = makeFakeWalletData()
+      await sut.create(walletData)
+      expect(walletRepositorySpy.walletData).toEqual({
+        userID: walletData.userID,
+        name: walletData.name,
+        isActive: true,
+        createdAt: new Date().getTime(),
+        updatedAt: null,
+        desactivatedAt: null,
+      })
+    })
   })
 
   describe('getById()', () => {})

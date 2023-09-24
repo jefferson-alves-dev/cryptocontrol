@@ -6,7 +6,7 @@ export class WalletRepositorySpy implements IWalletRepository {
     userID: '',
     name: '',
     isActive: true,
-    createdAt: new Date().getTime() / 1000,
+    createdAt: new Date().getTime(),
     updatedAt: null,
     desactivatedAt: null,
   }
