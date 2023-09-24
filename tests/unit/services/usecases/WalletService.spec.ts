@@ -1,6 +1,7 @@
 import { TWallet } from '@domain/types'
 import { faker } from '@faker-js/faker'
 import { WalletService } from '@services/usecases'
+import { throwError } from '@tests/helpers'
 import MockDate from 'mockdate'
 
 import { UserRepositorySpy, WalletRepositorySpy } from '../mocks'
@@ -53,5 +54,13 @@ describe('WalletService UseCases', () => {
 
   describe('updateById()', () => {})
 
-  describe('throws', () => {})
+  describe('throws', () => {
+    it('should throw if userRepository.isUserActive() throws', async () => {
+      const { sut, userRepositorySpy } = makeSut()
+      jest.spyOn(userRepositorySpy, 'isUserActive').mockImplementationOnce(throwError)
+      const walletData = makeFakeWalletData()
+      const promise = sut.create(walletData)
+      await expect(promise).rejects.toThrow()
+    })
+  })
 })
