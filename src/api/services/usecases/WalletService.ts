@@ -35,9 +35,9 @@ export class WalletService implements IWalletUsecase {
     return wallet || null
   }
 
-  async getAll(userID: string): Promise<TWallet.Full[] | null> {
+  async getAll(userID: string): Promise<TWallet.Full[]> {
     const wallets = await this.walletRepository.getAll(userID)
-    return wallets || null
+    return wallets
   }
 
   async deleteById(walletID: string, userID: string): Promise<TWallet.Deleted> {
