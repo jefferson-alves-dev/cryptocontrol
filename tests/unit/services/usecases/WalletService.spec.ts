@@ -173,7 +173,14 @@ describe('WalletService UseCases', () => {
     })
   })
 
-  describe('deleteById()', () => {})
+  describe('deleteById()', () => {
+    it('should call userRepository.isUserActive() with correct userID', async () => {
+      const { sut, userRepositorySpy } = makeSut()
+      const walletData = makeFullWalletData()
+      await sut.deleteById(walletData.id, walletData.userID)
+      expect(userRepositorySpy.userID).toBe(walletData.userID)
+    })
+  })
 
   describe('updateById()', () => {})
 
