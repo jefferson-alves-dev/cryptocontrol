@@ -1,12 +1,9 @@
-import CONFIG from '@config/index'
 import { IHasher } from '@domain/usecases/cryptography'
 import bcrypt from 'bcrypt'
 
 export class BCryptAdapter implements IHasher {
-  async hash(textPlain: string): Promise<string> {
-    const _salt = CONFIG.SALT_HASH
-    const hashSecret = CONFIG.HASH_PASS_SECRET
-    const textHashed = await bcrypt.hash(textPlain + hashSecret, _salt)
+  async hash(textPlain: string, hashSecret: string, salt: number): Promise<string> {
+    const textHashed = await bcrypt.hash(textPlain + hashSecret, salt)
     return textHashed
   }
 
