@@ -24,5 +24,13 @@ describe('Jwt Adapter', () => {
       await sut.generate(payload, 'any_secret', '1h')
       expect(signSpy).toHaveBeenCalledWith({ id: 'any_id' }, 'any_secret', { expiresIn: '1h' })
     })
+
+    test('should return a string on jwt.sign() success', async () => {
+      const sut = makeSut()
+      const payload = { id: 'any_id' }
+      const result = await sut.generate(payload, 'any_secret', '1h')
+      expect(typeof result).toBe('string')
+      expect(result).toBeTruthy()
+    })
   })
 })
