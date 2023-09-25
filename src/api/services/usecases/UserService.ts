@@ -1,3 +1,4 @@
+import CONFIG from '@config/index'
 import { TUser } from '@domain/types'
 import { IHasher } from '@domain/usecases/cryptography'
 import { IUserUsecase, TUserUsecase } from '@domain/usecases/user'
@@ -27,7 +28,7 @@ export class UserService implements IUserUsecase {
       }
     }
 
-    const hashedPassword = await hasher.hash(password)
+    const hashedPassword = await hasher.hash(password, CONFIG.HASH_PASS_SECRET, CONFIG.SALT_HASH)
 
     const createUser = await this.userRepository.create({
       name,
