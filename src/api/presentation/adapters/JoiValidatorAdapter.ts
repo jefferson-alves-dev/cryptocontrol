@@ -63,9 +63,8 @@ export class JoiValidatorAdapter implements IValidator {
   }
 }
 
-const makeResult = (error: Error | null = null, value?: any): TValidator.Result => {
+const makeResult = (error: Error | null = null): TValidator.Result => {
   return {
     error,
-    value,
   }
 }
