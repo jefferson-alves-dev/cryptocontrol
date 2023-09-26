@@ -46,5 +46,16 @@ describe('SignUpController', () => {
         passwordConfirmation: httpRequest.body.passwordConfirmation,
       })
     })
+
+    it('should return correct http response if validator.validate() returns error', async () => {
+      const { sut, validatorSpy } = makeSut()
+      validatorSpy.resultValidate = { error: new Error() }
+      const httpRequest = makeFakeRequest()
+      const httpResponse = await sut.handle(httpRequest)
+      expect(httpResponse).toEqual({
+        statusCode: 400,
+        body: new Error(),
+      })
+    })
   })
 })
