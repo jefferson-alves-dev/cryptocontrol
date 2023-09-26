@@ -4,8 +4,8 @@ import {
   InvalidEmailError,
   InvalidStringFormatError,
   MissingParameterError,
+  ParametersValueMismatchError,
   StringLengthExceededError,
-  StringTooShortError,
 } from '@presentation/errors'
 import Joi from 'joi'
 
@@ -69,17 +69,18 @@ describe('JoiValidator Adapter', () => {
     })
   })
 
-  it('should return the correct result when the minimum expected string length is not reached', async () => {
+  it('should return the correct result when expected values do not match', async () => {
     const schema = Joi.object({
-      name: Joi.string().min(10).required(),
-    })
+      password: Joi.string().required(),
+      passwordConfirmation: Joi.string().required().valid(Joi.ref('password')),
+    }).with('password', 'passwordConfirmation')
     const sut = new JoiValidatorAdapter(schema)
-    const string = faker.string.alphanumeric(9)
     const result = await sut.validate({
-      name: string,
+      password: 'any_password',
+      passwordConfirmation: 'wrong_password',
     })
     expect(result).toEqual({
-      error: new StringTooShortError(string, 10),
+      error: new ParametersValueMismatchError('password', 'passwordConfirmation'),
       value: undefined,
     })
   })
