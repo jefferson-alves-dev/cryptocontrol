@@ -66,5 +66,16 @@ describe('SignUpController', () => {
       await sut.handle(httpRequest)
       expect(userServiceSpy.userData.email).toBe(httpRequest.body.email)
     })
+
+    it('should return correct http response if userService.create() returns an error', async () => {
+      const { sut, userServiceSpy } = makeSut()
+      userServiceSpy.resultCreate = { error: new Error(), data: null }
+      const httpRequest = makeFakeRequest()
+      const httpResponse = await sut.handle(httpRequest)
+      expect(httpResponse).toEqual({
+        statusCode: 400,
+        body: new Error(),
+      })
+    })
   })
 })
