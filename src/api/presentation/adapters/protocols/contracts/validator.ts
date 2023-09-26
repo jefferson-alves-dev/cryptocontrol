@@ -5,6 +5,5 @@ export interface IValidator {
 export namespace TValidator {
   export type Result = {
     error: Error | null | undefined
-    value: any
   }
 }
