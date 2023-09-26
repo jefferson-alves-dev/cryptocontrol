@@ -15,20 +15,20 @@ export class UserServiceSpy implements IUserUsecase {
     data: null,
   }
 
-  userEmail: string = ''
+  userEmail: string = 'any_email'
   resultGetByEmail: TUserUsecase.Result | null = {
-    id: '',
-    name: '',
-    email: '',
-    password: '',
+    id: 'any_id',
+    name: 'any_name',
+    email: 'any_email',
+    password: 'any_password',
   }
 
   userID: string = ''
   returnGetById: TUserUsecase.Result | null = {
-    id: '',
-    name: '',
-    email: '',
-    password: '',
+    id: 'any_id',
+    name: 'any_name',
+    email: 'any_email',
+    password: 'any_password',
   }
   async create(userData: TUser.Create, hasher: IHasher): Promise<TUser.Result> {
     this.userData = userData

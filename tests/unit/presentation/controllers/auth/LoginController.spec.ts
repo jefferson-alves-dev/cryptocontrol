@@ -98,4 +98,16 @@ describe('LoginController', () => {
       })
     })
   })
+
+  describe('tokenGenerator', () => {
+    it('should call tokenGenerator.generate() with correct values', async () => {
+      const { sut, userServiceSpy, tokenGeneratorSpy } = makeSut()
+      const httpRequest = makeFakeRequest()
+      await sut.handle(httpRequest)
+      const user = await userServiceSpy.getByEmail(httpRequest.body.email)
+      expect(tokenGeneratorSpy.playload).toEqual({ userID: user?.id })
+      expect(tokenGeneratorSpy.secret).toBe(CONFIG.TOKEN_SECRET)
+      expect(tokenGeneratorSpy.expiresIn).toBe(CONFIG.TOKEN_EXPIRATION)
+    })
+  })
 })
