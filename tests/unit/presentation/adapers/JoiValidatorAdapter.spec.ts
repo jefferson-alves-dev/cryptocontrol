@@ -6,6 +6,7 @@ import {
   MissingParameterError,
   ParametersValueMismatchError,
   StringLengthExceededError,
+  StringTooShortError,
 } from '@presentation/errors'
 import { UnexpectedKeyError } from '@presentation/errors/UnexpectedKeyError'
 import Joi from 'joi'
@@ -66,6 +67,21 @@ describe('JoiValidator Adapter', () => {
     })
     expect(result).toEqual({
       error: new StringLengthExceededError(string, 10),
+      value: undefined,
+    })
+  })
+
+  it('should return the correct result when the minimum expected string length is not reached', async () => {
+    const schema = Joi.object({
+      name: Joi.string().min(10).required(),
+    })
+    const sut = new JoiValidatorAdapter(schema)
+    const string = faker.string.alphanumeric(9)
+    const result = await sut.validate({
+      name: string,
+    })
+    expect(result).toEqual({
+      error: new StringTooShortError(string, 10),
       value: undefined,
     })
   })
