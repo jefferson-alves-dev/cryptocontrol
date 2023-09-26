@@ -1,6 +1,6 @@
 import { faker } from '@faker-js/faker'
 import { JoiValidatorAdapter } from '@presentation/adapters'
-import { InvalidStringFormatError, MissingParameterError } from '@presentation/errors'
+import { InvalidEmailError, InvalidStringFormatError, MissingParameterError } from '@presentation/errors'
 import Joi from 'joi'
 
 describe('JoiValidator Adapter', () => {
@@ -30,6 +30,20 @@ describe('JoiValidator Adapter', () => {
     })
     expect(result).toEqual({
       error: new InvalidStringFormatError('name'),
+      value: undefined,
+    })
+  })
+
+  it('should return correct result when an invalid email is provided', async () => {
+    const schema = Joi.object({
+      email: Joi.string().email().required(),
+    })
+    const sut = new JoiValidatorAdapter(schema)
+    const result = await sut.validate({
+      email: 'invalid-email',
+    })
+    expect(result).toEqual({
+      error: new InvalidEmailError('email'),
       value: undefined,
     })
   })
