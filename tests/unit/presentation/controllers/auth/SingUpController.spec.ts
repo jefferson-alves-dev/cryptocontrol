@@ -58,4 +58,13 @@ describe('SignUpController', () => {
       })
     })
   })
+
+  describe('userService', () => {
+    it('should call userService.create() with correct email', async () => {
+      const { sut, userServiceSpy } = makeSut()
+      const httpRequest = makeFakeRequest()
+      await sut.handle(httpRequest)
+      expect(userServiceSpy.userData.email).toBe(httpRequest.body.email)
+    })
+  })
 })
