@@ -1,6 +1,11 @@
 import { faker } from '@faker-js/faker'
 import { JoiValidatorAdapter } from '@presentation/adapters'
-import { InvalidEmailError, InvalidStringFormatError, MissingParameterError } from '@presentation/errors'
+import {
+  InvalidEmailError,
+  InvalidStringFormatError,
+  MissingParameterError,
+  StringLengthExceededError,
+} from '@presentation/errors'
 import Joi from 'joi'
 
 describe('JoiValidator Adapter', () => {
@@ -44,6 +49,21 @@ describe('JoiValidator Adapter', () => {
     })
     expect(result).toEqual({
       error: new InvalidEmailError('email'),
+      value: undefined,
+    })
+  })
+
+  it('should return correct result when a expected max length of string is exceeded', async () => {
+    const schema = Joi.object({
+      name: Joi.string().max(10).required(),
+    })
+    const sut = new JoiValidatorAdapter(schema)
+    const string = faker.string.alphanumeric(11)
+    const result = await sut.validate({
+      name: string,
+    })
+    expect(result).toEqual({
+      error: new StringLengthExceededError(string, 10),
       value: undefined,
     })
   })
