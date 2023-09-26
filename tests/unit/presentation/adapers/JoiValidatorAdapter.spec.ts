@@ -116,4 +116,18 @@ describe('JoiValidator Adapter', () => {
       value: undefined,
     })
   })
+
+  it('should return correct result on validate success', async () => {
+    const schema = Joi.object({
+      name: Joi.string().required(),
+    })
+    const sut = new JoiValidatorAdapter(schema)
+    const result = await sut.validate({
+      name: 'Any Name',
+    })
+    expect(result).toEqual({
+      error: null,
+      value: undefined,
+    })
+  })
 })
