@@ -145,5 +145,16 @@ describe('LoginController', () => {
         body: new Error('Internal server error'),
       })
     })
+
+    it('should return correct http response if tokenGenerator throws', async () => {
+      const { sut, tokenGeneratorSpy } = makeSut()
+      jest.spyOn(tokenGeneratorSpy, 'generate').mockImplementationOnce(throwError)
+      const httpRequest = makeFakeRequest()
+      const result = await sut.handle(httpRequest)
+      expect(result).toEqual({
+        statusCode: 500,
+        body: new Error('Internal server error'),
+      })
+    })
   })
 })
