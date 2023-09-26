@@ -6,6 +6,5 @@ export namespace TValidator {
   export type Result = {
     error: Error | null | undefined
     value: any
-    isValid: boolean
   }
 }
