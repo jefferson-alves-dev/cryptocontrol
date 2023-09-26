@@ -86,5 +86,16 @@ describe('LoginController', () => {
       await sut.handle(httpRequest)
       expect(hasherSpy.textPlain).toBe(httpRequest.body.password + CONFIG.HASH_PASS_SECRET)
     })
+
+    it('should return correct http response if hasher.compare() returns false', async () => {
+      const { sut, hasherSpy } = makeSut()
+      hasherSpy.compareResult = false
+      const httpRequest = makeFakeRequest()
+      const httpResponse = await sut.handle(httpRequest)
+      expect(httpResponse).toEqual({
+        statusCode: 400,
+        body: new Error('Invalid password'),
+      })
+    })
   })
 })
