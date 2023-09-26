@@ -25,7 +25,7 @@ export const conflict = (error: Error): HttpResponse => ({
 
 export const serverError = (): HttpResponse => ({
   statusCode: 500,
-  body: 'Internal server error',
+  body: new Error('Internal server error'),
 })
 
 export const success = <T>(data: T): HttpResponse => ({
