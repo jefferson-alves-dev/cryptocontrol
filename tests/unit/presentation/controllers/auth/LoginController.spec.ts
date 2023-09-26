@@ -65,5 +65,16 @@ describe('LoginController', () => {
       await sut.handle(httpRequest)
       expect(userServiceSpy.userEmail).toBe(httpRequest.body.email)
     })
+
+    it('should return correct http response if userService.getByEmail() returns null', async () => {
+      const { sut, userServiceSpy } = makeSut()
+      userServiceSpy.resultGetByEmail = null
+      const httpRequest = makeFakeRequest()
+      const httpResponse = await sut.handle(httpRequest)
+      expect(httpResponse).toEqual({
+        statusCode: 400,
+        body: new Error('User not found'),
+      })
+    })
   })
 })
