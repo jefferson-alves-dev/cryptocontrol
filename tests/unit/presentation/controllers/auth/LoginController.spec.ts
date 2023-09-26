@@ -1,3 +1,4 @@
+import CONFIG from '@config/index'
 import { faker } from '@faker-js/faker'
 import { LoginController } from '@presentation/controllers/auth'
 import { HasherSpy } from '@tests/unit/infra/mock'
@@ -75,6 +76,15 @@ describe('LoginController', () => {
         statusCode: 400,
         body: new Error('User not found'),
       })
+    })
+  })
+
+  describe('hasher', () => {
+    it('should call hasher.compare() with correct values', async () => {
+      const { sut, hasherSpy } = makeSut()
+      const httpRequest = makeFakeRequest()
+      await sut.handle(httpRequest)
+      expect(hasherSpy.textPlain).toBe(httpRequest.body.password + CONFIG.HASH_PASS_SECRET)
     })
   })
 })
