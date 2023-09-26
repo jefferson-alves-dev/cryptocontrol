@@ -7,6 +7,7 @@ import {
   ParametersValueMismatchError,
   StringLengthExceededError,
 } from '@presentation/errors'
+import { UnexpectedKeyError } from '@presentation/errors/UnexpectedKeyError'
 import Joi from 'joi'
 
 describe('JoiValidator Adapter', () => {
@@ -81,6 +82,21 @@ describe('JoiValidator Adapter', () => {
     })
     expect(result).toEqual({
       error: new ParametersValueMismatchError('password', 'passwordConfirmation'),
+      value: undefined,
+    })
+  })
+
+  it('should return correct result when unexpected key is provided', async () => {
+    const schema = Joi.object({
+      name: Joi.string().required(),
+    })
+    const sut = new JoiValidatorAdapter(schema)
+    const result = await sut.validate({
+      name: 'Any Name',
+      unexpected_key: 'any_value',
+    })
+    expect(result).toEqual({
+      error: new UnexpectedKeyError('unexpected_key'),
       value: undefined,
     })
   })
