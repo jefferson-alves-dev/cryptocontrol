@@ -1,6 +1,7 @@
 import CONFIG from '@config/index'
 import { faker } from '@faker-js/faker'
 import { LoginController } from '@presentation/controllers/auth'
+import { throwError } from '@tests/helpers'
 import { HasherSpy } from '@tests/unit/infra/mock'
 
 import { TokenGeneratorSpy, UserServiceSpy, ValidatorSpy } from '../../mock'
@@ -108,6 +109,19 @@ describe('LoginController', () => {
       expect(tokenGeneratorSpy.playload).toEqual({ userID: user?.id })
       expect(tokenGeneratorSpy.secret).toBe(CONFIG.TOKEN_SECRET)
       expect(tokenGeneratorSpy.expiresIn).toBe(CONFIG.TOKEN_EXPIRATION)
+    })
+  })
+
+  describe('throws', () => {
+    it('should return correct http response if validator throws', async () => {
+      const { sut, validatorSpy } = makeSut()
+      jest.spyOn(validatorSpy, 'validate').mockImplementationOnce(throwError)
+      const httpRequest = makeFakeRequest()
+      const result = await sut.handle(httpRequest)
+      expect(result).toEqual({
+        statusCode: 500,
+        body: new Error('Internal server error'),
+      })
     })
   })
 })
