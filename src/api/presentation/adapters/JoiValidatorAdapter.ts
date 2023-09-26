@@ -67,6 +67,5 @@ const makeResult = (error: Error | null = null, value?: any): TValidator.Result 
   return {
     error,
     value,
-    isValid: error === null,
   }
 }
