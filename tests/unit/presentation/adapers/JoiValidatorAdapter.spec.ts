@@ -22,7 +22,6 @@ describe('JoiValidator Adapter', () => {
     })
     expect(result).toEqual({
       error: new MissingParameterError('name'),
-      value: undefined,
     })
   })
 
@@ -38,7 +37,6 @@ describe('JoiValidator Adapter', () => {
     })
     expect(result).toEqual({
       error: new InvalidStringFormatError('name'),
-      value: undefined,
     })
   })
 
@@ -52,7 +50,6 @@ describe('JoiValidator Adapter', () => {
     })
     expect(result).toEqual({
       error: new InvalidEmailError('email'),
-      value: undefined,
     })
   })
 
@@ -67,7 +64,6 @@ describe('JoiValidator Adapter', () => {
     })
     expect(result).toEqual({
       error: new StringLengthExceededError(string, 10),
-      value: undefined,
     })
   })
 
@@ -82,7 +78,6 @@ describe('JoiValidator Adapter', () => {
     })
     expect(result).toEqual({
       error: new StringTooShortError(string, 10),
-      value: undefined,
     })
   })
 
@@ -98,7 +93,6 @@ describe('JoiValidator Adapter', () => {
     })
     expect(result).toEqual({
       error: new ParametersValueMismatchError('password', 'passwordConfirmation'),
-      value: undefined,
     })
   })
 
@@ -113,7 +107,6 @@ describe('JoiValidator Adapter', () => {
     })
     expect(result).toEqual({
       error: new UnexpectedKeyError('unexpected_key'),
-      value: undefined,
     })
   })
 
@@ -127,7 +120,6 @@ describe('JoiValidator Adapter', () => {
     })
     expect(result).toEqual({
       error: null,
-      value: undefined,
     })
   })
 })
