@@ -1,6 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { GetAllWalletsControler } from '@presentation/controllers/wallets'
 import { MissingParameterError } from '@presentation/errors'
+import { throwError } from '@tests/helpers'
 
 import { WalletServiceSpy } from '../../mocks'
 
@@ -41,6 +42,19 @@ describe('GetAllWalletsControler', () => {
       const httpRequest = makeFakeRequest()
       await sut.handle(httpRequest)
       expect(walletServiceSpy.userID).toEqual(httpRequest.userData.userID)
+    })
+  })
+
+  describe('throws', () => {
+    it('should returns correct http response if walletService.getAll() throws', async () => {
+      const { sut, walletServiceSpy } = makeSut()
+      jest.spyOn(walletServiceSpy, 'getAll').mockRejectedValueOnce(throwError)
+      const httpRequest = makeFakeRequest()
+      const result = await sut.handle(httpRequest)
+      expect(result).toEqual({
+        statusCode: 500,
+        body: new Error('Internal server error'),
+      })
     })
   })
 })
