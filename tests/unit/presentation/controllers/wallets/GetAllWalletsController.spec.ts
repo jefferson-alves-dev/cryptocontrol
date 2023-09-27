@@ -57,4 +57,23 @@ describe('GetAllWalletsControler', () => {
       })
     })
   })
+
+  describe('success', () => {
+    it('should returns correct http response if walletService.getAll() succeeds', async () => {
+      const { sut, walletServiceSpy } = makeSut()
+      const httpRequest = makeFakeRequest()
+      const result = await sut.handle(httpRequest)
+      expect(result).toEqual({
+        statusCode: 200,
+        body: walletServiceSpy.resultGetAll,
+      })
+      expect(result.body[0].id).toBe('any_wallet_id')
+      expect(result.body[0].userID).toBe('any_user_id')
+      expect(result.body[0].name).toBe('any_wallet_name')
+      expect(result.body[0].isActive).toBe(true)
+      expect(new Date(result.body[0].createdAt) instanceof Date && !isNaN(result.body[0].createdAt)).toBeTruthy()
+      expect(result.body[0].updatedAt).toBe(null)
+      expect(result.body[0].desactivatedAt).toBe(null)
+    })
+  })
 })
