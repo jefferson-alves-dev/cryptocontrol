@@ -54,5 +54,16 @@ describe('DeleteWalletController', () => {
       expect(walletServiceSpy.walletID).toEqual(httpRequest.params.walletID)
       expect(walletServiceSpy.userID).toEqual(httpRequest.userData.userID)
     })
+
+    it('should return correct http response if walletService.deleteById() returns an error', async () => {
+      const { sut, walletServiceSpy } = makeSut()
+      const httpRequest = makeFakeRequest()
+      walletServiceSpy.resultDeleteById = { error: new Error(), data: null }
+      const httpResponse = await sut.handle(httpRequest)
+      expect(httpResponse).toEqual({
+        statusCode: 404,
+        body: new Error(),
+      })
+    })
   })
 })
