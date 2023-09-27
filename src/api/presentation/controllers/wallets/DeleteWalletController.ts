@@ -9,7 +9,7 @@ export class DeleteWalletController implements IController {
     private readonly validator: IValidator,
     private readonly walletService: IWalletUsecase,
   ) {}
-  async handle(httpRequest: GetWalletController.Request): Promise<HttpResponse> {
+  async handle(httpRequest: DeleteWalletController.Request): Promise<HttpResponse> {
     const validate = await this.validator.validate(httpRequest.params)
     if (validate.error) {
       return badRequest(validate.error)
@@ -22,7 +22,7 @@ export class DeleteWalletController implements IController {
   }
 }
 
-export namespace GetWalletController {
+export namespace DeleteWalletController {
   export type Request = {
     userData: {
       [key: string]: string
