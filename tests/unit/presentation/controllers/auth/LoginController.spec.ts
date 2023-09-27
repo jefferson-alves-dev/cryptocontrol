@@ -2,9 +2,9 @@ import CONFIG from '@config/index'
 import { faker } from '@faker-js/faker'
 import { LoginController } from '@presentation/controllers/auth'
 import { throwError } from '@tests/helpers'
-import { HasherSpy } from '@tests/unit/infra/mock'
+import { HasherSpy } from '@tests/unit/infra/mocks'
 
-import { TokenGeneratorSpy, UserServiceSpy, ValidatorSpy } from '../../mock'
+import { TokenGeneratorSpy, UserServiceSpy, ValidatorSpy } from '../../mocks'
 
 type SutTypes = {
   sut: LoginController

@@ -1,7 +1,7 @@
 import { TUser } from '@domain/types'
 import { IHasher } from '@domain/usecases/cryptography'
 import { IUserUsecase, TUserUsecase } from '@domain/usecases/user'
-import { HasherSpy } from '@tests/unit/infra/mock'
+import { HasherSpy } from '@tests/unit/infra/mocks'
 
 export class UserServiceSpy implements IUserUsecase {
   userData: TUser.Create = {

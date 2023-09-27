@@ -1,9 +1,9 @@
 import { faker } from '@faker-js/faker'
 import { SignUpController } from '@presentation/controllers/auth'
 import { throwError } from '@tests/helpers'
-import { HasherSpy } from '@tests/unit/infra/mock'
+import { HasherSpy } from '@tests/unit/infra/mocks'
 
-import { UserServiceSpy, ValidatorSpy } from '../../mock'
+import { UserServiceSpy, ValidatorSpy } from '../../mocks'
 
 type SutTypes = {
   sut: SignUpController

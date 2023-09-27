@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker'
 import { CreateWalletController } from '@presentation/controllers/wallets'
 import { throwError } from '@tests/helpers'
 
-import { ValidatorSpy, WalletServiceSpy } from '../../mock'
+import { ValidatorSpy, WalletServiceSpy } from '../../mocks'
 
 type SutTypes = {
   sut: CreateWalletController

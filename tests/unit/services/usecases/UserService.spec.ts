@@ -3,7 +3,7 @@ import { faker } from '@faker-js/faker'
 import { UserAlreadyExistsError } from '@services/erros'
 import { UserService } from '@services/usecases'
 import { throwError } from '@tests/helpers'
-import { HasherSpy } from '@tests/unit/infra/mock'
+import { HasherSpy } from '@tests/unit/infra/mocks'
 import MockDate from 'mockdate'
 
 import { UserRepositorySpy } from '../mocks'
