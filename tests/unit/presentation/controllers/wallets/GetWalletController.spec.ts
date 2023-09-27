@@ -84,5 +84,16 @@ describe('GetWalletController', () => {
         body: new Error('Internal server error'),
       })
     })
+
+    it('should return correct http response if walletService.getById() throws', async () => {
+      const { sut, walletServiceSpy } = makeSut()
+      jest.spyOn(walletServiceSpy, 'getById').mockImplementationOnce(throwError)
+      const httpRequest = makeFakeRequest()
+      const result = await sut.handle(httpRequest)
+      expect(result).toEqual({
+        statusCode: 500,
+        body: new Error('Internal server error'),
+      })
+    })
   })
 })
