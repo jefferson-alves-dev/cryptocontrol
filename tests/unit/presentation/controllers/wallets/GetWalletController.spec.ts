@@ -96,4 +96,24 @@ describe('GetWalletController', () => {
       })
     })
   })
+
+  describe('success', () => {
+    it('should return correct http response if on success', async () => {
+      const { sut } = makeSut()
+      const httpRequest = makeFakeRequest()
+      const result = await sut.handle(httpRequest)
+      expect(result).toEqual({
+        statusCode: 200,
+        body: {
+          id: 'any_wallet_id',
+          userID: 'any_user_id',
+          name: 'any_wallet_name',
+          isActive: true,
+          createdAt: new Date().getTime(),
+          updatedAt: null,
+          desactivatedAt: null,
+        },
+      })
+    })
+  })
 })
