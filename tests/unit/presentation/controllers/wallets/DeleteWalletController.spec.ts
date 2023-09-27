@@ -91,4 +91,15 @@ describe('DeleteWalletController', () => {
       })
     })
   })
+
+  describe('success', () => {
+    it('should return correct http response on success', async () => {
+      const { sut } = makeSut()
+      const httpRequest = makeFakeRequest()
+      const result = await sut.handle(httpRequest)
+      expect(result).toEqual({
+        statusCode: 204,
+      })
+    })
+  })
 })
