@@ -59,5 +59,16 @@ describe('GetWalletController', () => {
       expect(walletServiceSpy.walletID).toEqual(httpRequest.params.walletID)
       expect(walletServiceSpy.userID).toEqual(httpRequest.userData.userID)
     })
+
+    it('should return correct http response if walletService.getById() fails', async () => {
+      const { sut, walletServiceSpy } = makeSut()
+      const httpRequest = makeFakeRequest()
+      walletServiceSpy.resultGetById = null
+      const result = await sut.handle(httpRequest)
+      expect(result).toEqual({
+        statusCode: 404,
+        body: new Error('Wallet not found'),
+      })
+    })
   })
 })
