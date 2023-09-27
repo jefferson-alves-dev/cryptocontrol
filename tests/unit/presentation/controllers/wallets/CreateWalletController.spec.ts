@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker'
 import { CreateWalletController } from '@presentation/controllers/wallets'
+import { throwError } from '@tests/helpers'
 
 import { ValidatorSpy, WalletServiceSpy } from '../../mock'
 
@@ -71,6 +72,19 @@ describe('CreateWalletController', () => {
       expect(httpResponse).toEqual({
         statusCode: 400,
         body: new Error(),
+      })
+    })
+  })
+
+  describe('throws', () => {
+    it('should return correct http response if validator throws', async () => {
+      const { sut, validatorSpy } = makeSut()
+      jest.spyOn(validatorSpy, 'validate').mockImplementationOnce(throwError)
+      const httpRequest = makeFakeRequest()
+      const result = await sut.handle(httpRequest)
+      expect(result).toEqual({
+        statusCode: 500,
+        body: new Error('Internal server error'),
       })
     })
   })
