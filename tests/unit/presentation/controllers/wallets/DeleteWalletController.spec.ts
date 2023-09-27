@@ -45,4 +45,14 @@ describe('DeleteWalletController', () => {
       })
     })
   })
+
+  describe('walletService', () => {
+    it('should call walletService.deleteById() with correct values', async () => {
+      const { sut, walletServiceSpy } = makeSut()
+      const httpRequest = makeFakeRequest()
+      await sut.handle(httpRequest)
+      expect(walletServiceSpy.walletID).toEqual(httpRequest.params.walletID)
+      expect(walletServiceSpy.userID).toEqual(httpRequest.userData.userID)
+    })
+  })
 })
