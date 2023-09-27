@@ -62,5 +62,16 @@ describe('CreateWalletController', () => {
         userID: httpRequest.userData.userID,
       })
     })
+
+    it('should return correct http response if walletService.create() returns an error', async () => {
+      const { sut, walletServiceSpy } = makeSut()
+      const httpRequest = makeFakeRequest()
+      walletServiceSpy.resultCreate = { error: new Error(), data: null }
+      const httpResponse = await sut.handle(httpRequest)
+      expect(httpResponse).toEqual({
+        statusCode: 400,
+        body: new Error(),
+      })
+    })
   })
 })
