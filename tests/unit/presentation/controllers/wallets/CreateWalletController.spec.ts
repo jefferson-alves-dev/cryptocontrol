@@ -51,4 +51,16 @@ describe('CreateWalletController', () => {
       })
     })
   })
+
+  describe('walletService', () => {
+    it('should call walletService.create() with correct values', async () => {
+      const { sut, walletServiceSpy } = makeSut()
+      const httpRequest = makeFakeRequest()
+      await sut.handle(httpRequest)
+      expect(walletServiceSpy.walletDataCreate).toEqual({
+        name: httpRequest.body.name,
+        userID: httpRequest.userData.userID,
+      })
+    })
+  })
 })
