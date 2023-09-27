@@ -1,5 +1,6 @@
 import { faker } from '@faker-js/faker'
 import { GetAllWalletsControler } from '@presentation/controllers/wallets'
+import { MissingParameterError } from '@presentation/errors'
 
 import { WalletServiceSpy } from '../../mocks'
 
@@ -22,6 +23,18 @@ const makeFakeRequest = (): GetAllWalletsControler.Request => ({
 })
 
 describe('GetAllWalletsControler', () => {
+  describe('internal validations ', () => {
+    it('should return correct http response when data provided is missing parameter userID', async () => {
+      const { sut } = makeSut()
+      const httpRequest = {}
+      const result = await sut.handle(httpRequest as GetAllWalletsControler.Request)
+      expect(result).toEqual({
+        statusCode: 400,
+        body: new MissingParameterError('userID'),
+      })
+    })
+  })
+
   describe('walletService', () => {
     it('should call walletService.getAll() with correct value', async () => {
       const { sut, walletServiceSpy } = makeSut()
