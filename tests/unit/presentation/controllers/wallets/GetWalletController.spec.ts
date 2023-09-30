@@ -109,7 +109,7 @@ describe('GetWalletController', () => {
           userID: 'any_user_id',
           name: 'any_wallet_name',
           isActive: true,
-          createdAt: new Date().getTime(),
+          createdAt: expect.any(Number),
           updatedAt: null,
           desactivatedAt: null,
         },
