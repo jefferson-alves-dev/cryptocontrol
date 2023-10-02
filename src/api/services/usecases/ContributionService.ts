@@ -34,6 +34,14 @@ export class ContributionService implements IContribution {
       }
     }
 
+    await this.contributionRepository.create({
+      ...contributionData,
+      createdAt: new Date().getTime(),
+      updatedAt: null,
+      desactivatedAt: null,
+      isActive: true,
+    })
+
     return {
       error: null,
       data: {
