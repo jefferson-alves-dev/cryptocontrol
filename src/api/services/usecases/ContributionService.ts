@@ -34,7 +34,7 @@ export class ContributionService implements IContribution {
       }
     }
 
-    await this.contributionRepository.create({
+    const contribution = await this.contributionRepository.create({
       ...contributionData,
       createdAt: new Date().getTime(),
       updatedAt: null,
@@ -45,7 +45,7 @@ export class ContributionService implements IContribution {
     return {
       error: null,
       data: {
-        id: '1',
+        id: contribution.id,
       },
     }
   }
