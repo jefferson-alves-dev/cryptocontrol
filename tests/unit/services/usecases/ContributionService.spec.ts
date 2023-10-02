@@ -70,5 +70,18 @@ describe('ContributionService', () => {
       expect(result.error).toEqual(new Error('Wallet not found'))
       expect(result.data).toBeNull()
     })
+
+    it('should call contributionRepository.create() with correct values', async () => {
+      const { sut, contributionRepositorySpy } = makeSut()
+      const contributionData = makeFakeContributionData()
+      await sut.create(contributionData)
+      expect(contributionRepositorySpy.contributionData).toEqual({
+        ...contributionData,
+        createdAt: expect.any(Number),
+        updatedAt: null,
+        desactivatedAt: null,
+        isActive: true,
+      })
+    })
   })
 })
