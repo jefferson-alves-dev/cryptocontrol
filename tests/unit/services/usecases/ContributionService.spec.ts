@@ -52,5 +52,23 @@ describe('ContributionService', () => {
       expect(walletRepositorySpy.userID).toBe(contributionData.userID)
       expect(walletRepositorySpy.walletID).toBe(contributionData.walletID)
     })
+
+    it('should return correct result if user is not found', async () => {
+      const { sut, userRepositorySpy } = makeSut()
+      userRepositorySpy.resultIsUserActive = false
+      const contributionData = makeFakeContributionData()
+      const result = await sut.create(contributionData)
+      expect(result.error).toEqual(new Error('User not found'))
+      expect(result.data).toBeNull()
+    })
+
+    it('should return correct result if wallet is not found', async () => {
+      const { sut, walletRepositorySpy } = makeSut()
+      walletRepositorySpy.resultGetById = null
+      const contributionData = makeFakeContributionData()
+      const result = await sut.create(contributionData)
+      expect(result.error).toEqual(new Error('Wallet not found'))
+      expect(result.data).toBeNull()
+    })
   })
 })
