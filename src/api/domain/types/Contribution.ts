@@ -12,6 +12,7 @@ export namespace TContribution {
   }
 
   export interface Result {
-    id: string
+    error: globalThis.Error | null
+    data: { id: string } | null
   }
 }

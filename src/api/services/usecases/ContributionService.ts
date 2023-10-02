@@ -21,7 +21,10 @@ export class ContributionService implements IContribution {
     ])
 
     return {
-      id: 'any_id',
+      error: null,
+      data: {
+        id: '1',
+      },
     }
   }
 }
