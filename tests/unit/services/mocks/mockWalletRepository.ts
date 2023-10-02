@@ -15,7 +15,15 @@ export class WalletRepositorySpy implements IWalletRepository {
   resultCreate: TWalletRespository.Created = {
     id: '',
   }
-  resultGetById: TWalletRespository.Full | null = null
+  resultGetById: TWalletRespository.Full | null = {
+    id: '',
+    userID: '',
+    name: '',
+    isActive: true,
+    createdAt: new Date().getTime(),
+    updatedAt: null,
+    desactivatedAt: null,
+  }
   resultGetAll: TWalletRespository.Full[] = []
   resultDeleteById: number = 1
   resultUpdateById: void = undefined
