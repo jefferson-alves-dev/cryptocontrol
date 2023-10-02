@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { TContribution } from '@domain/types'
 import { IContribution } from '@domain/usecases/contribution'
 import {
@@ -14,8 +15,11 @@ export class ContributionService implements IContribution {
   ) {}
 
   async create(contributionData: TContribution.Create): Promise<TContribution.Result> {
-    await this.userRepository.isUserActive(contributionData.userID)
-    await this.walletRepository.getById(contributionData.walletID, contributionData.userID)
+    const [userExists, walletExists] = await Promise.all([
+      this.userRepository.isUserActive(contributionData.userID),
+      this.walletRepository.getById(contributionData.walletID, contributionData.userID),
+    ])
+
     return {
       id: 'any_id',
     }
