@@ -20,6 +20,13 @@ export class ContributionService implements IContribution {
       this.walletRepository.getById(contributionData.walletID, contributionData.userID),
     ])
 
+    if (!userExists) {
+      return {
+        error: new Error('User not found'),
+        data: null,
+      }
+    }
+
     return {
       error: null,
       data: {
