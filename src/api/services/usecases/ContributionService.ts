@@ -27,6 +27,13 @@ export class ContributionService implements IContribution {
       }
     }
 
+    if (!walletExists) {
+      return {
+        error: new Error('Wallet not found'),
+        data: null,
+      }
+    }
+
     return {
       error: null,
       data: {
