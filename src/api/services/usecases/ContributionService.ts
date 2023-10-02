@@ -15,6 +15,7 @@ export class ContributionService implements IContribution {
 
   async create(contributionData: TContribution.Create): Promise<TContribution.Result> {
     await this.userRepository.isUserActive(contributionData.userID)
+    await this.walletRepository.getById(contributionData.walletID, contributionData.userID)
     return {
       id: 'any_id',
     }
