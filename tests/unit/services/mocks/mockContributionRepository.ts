@@ -18,11 +18,11 @@ export class ContributionRepositorySpy implements IContributionRepository {
     desactivatedAt: null,
     isActive: true,
   }
-  returnCreate: TContributionRepository.CreateResult = {
+  resultCreate: TContributionRepository.CreateResult = {
     id: faker.string.uuid(),
   }
   async create(contributionData: TContributionRepository.Create): Promise<TContributionRepository.CreateResult> {
     this.contributionData = contributionData
-    return this.returnCreate
+    return this.resultCreate
   }
 }
