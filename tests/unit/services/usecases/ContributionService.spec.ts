@@ -44,5 +44,13 @@ describe('ContributionService', () => {
       await sut.create(contributionData)
       expect(userRepositorySpy.userID).toBe(contributionData.userID)
     })
+
+    it('should call walletRepository.isUserActive() with correct values', async () => {
+      const { sut, walletRepositorySpy } = makeSut()
+      const contributionData = makeFakeContributionData()
+      await sut.create(contributionData)
+      expect(walletRepositorySpy.userID).toBe(contributionData.userID)
+      expect(walletRepositorySpy.walletID).toBe(contributionData.walletID)
+    })
   })
 })
