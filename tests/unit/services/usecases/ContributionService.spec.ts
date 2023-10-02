@@ -83,5 +83,13 @@ describe('ContributionService', () => {
         isActive: true,
       })
     })
+
+    it('should return correct result on success', async () => {
+      const { sut } = makeSut()
+      const contributionData = makeFakeContributionData()
+      const result = await sut.create(contributionData)
+      expect(result.error).toBeNull()
+      expect(result.data?.id).toBeTruthy()
+    })
   })
 })
