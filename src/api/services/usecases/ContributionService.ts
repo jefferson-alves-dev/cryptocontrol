@@ -81,6 +81,11 @@ export class ContributionService implements IContribution {
 
   async deleteById(contributionID: string, userID: string): Promise<TContribution.DeleteResult> {
     const deleted = await this.contributionRepository.deleteById(contributionID, userID)
+    if (!deleted) {
+      return {
+        error: new Error('Contribution not found'),
+      }
+    }
     return {
       error: null,
     }
