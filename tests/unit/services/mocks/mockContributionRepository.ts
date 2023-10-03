@@ -67,6 +67,7 @@ export class ContributionRepositorySpy implements IContributionRepository {
       createdAt: new Date().getTime(),
     },
   ]
+  resultDeleteById: boolean = true
   async create(contributionData: TContributionRepository.Create): Promise<TContributionRepository.CreateResult> {
     this.contributionData = contributionData
     return this.resultCreate
@@ -81,5 +82,11 @@ export class ContributionRepositorySpy implements IContributionRepository {
   async getAll(userID: string): Promise<TContributionRepository.GetAllResult> {
     this.userID = userID
     return this.resultGetAll
+  }
+
+  async deleteById(contributionID: string, userID: string): Promise<boolean> {
+    this.contributionID = contributionID
+    this.userID = userID
+    return this.resultDeleteById
   }
 }

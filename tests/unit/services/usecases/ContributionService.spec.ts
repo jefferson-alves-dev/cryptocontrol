@@ -170,4 +170,15 @@ describe('ContributionService', () => {
       expect(result.data?.[0]).toBeTruthy()
     })
   })
+
+  describe('deleteById()', () => {
+    it('should call contributionRepository.deleteById() with correct values', async () => {
+      const { sut, contributionRepositorySpy } = makeSut()
+      const contributionID = faker.string.uuid()
+      const userID = faker.string.uuid()
+      await sut.deleteById(contributionID, userID)
+      expect(contributionRepositorySpy.contributionID).toBe(contributionID)
+      expect(contributionRepositorySpy.userID).toBe(userID)
+    })
+  })
 })
