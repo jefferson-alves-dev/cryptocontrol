@@ -105,7 +105,7 @@ describe('ContributionService', () => {
 
     it('should return correct result if contribution is not found', async () => {
       const { sut, contributionRepositorySpy } = makeSut()
-      contributionRepositorySpy.resultGetById = null
+      contributionRepositorySpy.resultGet = null
       const contributionID = faker.string.uuid()
       const userID = faker.string.uuid()
       const result = await sut.getById(contributionID, userID)
@@ -130,6 +130,24 @@ describe('ContributionService', () => {
       expect(result.data?.amountPurchasedCoin).toBeTruthy()
       expect(result.data?.contributionDate).toBeTruthy()
       expect(result.data?.createdAt).toBeTruthy()
+    })
+  })
+
+  describe('getAll()', () => {
+    it('should call contributionRepository.getAll() with correct value', async () => {
+      const { sut, contributionRepositorySpy } = makeSut()
+      const userID = faker.string.uuid()
+      await sut.getAll(userID)
+      expect(contributionRepositorySpy.userID).toBe(userID)
+    })
+
+    it('should return correct result if contributions is not found', async () => {
+      const { sut, contributionRepositorySpy } = makeSut()
+      contributionRepositorySpy.resultGetAll = []
+      const userID = faker.string.uuid()
+      const result = await sut.getAll(userID)
+      expect(result.error).toEqual(new Error('Contributions not found'))
+      expect(result.data).toBe(null)
     })
   })
 })
