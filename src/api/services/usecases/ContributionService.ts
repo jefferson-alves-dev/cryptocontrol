@@ -63,4 +63,9 @@ export class ContributionService implements IContribution {
       data: contribution,
     }
   }
+
+  async getAll(userID: string): Promise<TContribution.GetResult[]> {
+    const contributions = await this.contributionRepository.getAll(userID)
+    return []
+  }
 }
