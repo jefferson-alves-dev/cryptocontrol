@@ -19,7 +19,7 @@ export namespace TContributionRepository {
     id: string
   }
 
-  export type GetResult = {
+  type DataItem = {
     id: string
     walletID: string
     userID: string
@@ -31,5 +31,8 @@ export namespace TContributionRepository {
     amountPurchasedCoin: number
     contributionDate: number
     createdAt: number
-  } | null
+  }
+
+  export type GetResult = DataItem | null
+  export type GetAllResult = DataItem[] | null
 }
