@@ -1,5 +1,5 @@
 export namespace TContribution {
-  export interface Create {
+  export type Create = {
     walletID: string
     userID: string
     purchasedCoinID: number
@@ -11,8 +11,24 @@ export namespace TContribution {
     contributionDate: number
   }
 
-  export interface Result {
+  export type CreateResult = {
     error: globalThis.Error | null
     data: { id: string } | null
+  }
+
+  export type GetResult = {
+    error: globalThis.Error | null
+    data: {
+      walletID: string
+      userID: string
+      purchasedCoinID: number
+      purchaseCoinID: number
+      purchasedCoinSymbol: string
+      purchaseCoinSymbol: string
+      currentPricePurchasedCoin: number
+      amountPurchasedCoin: number
+      contributionDate: number
+      createdAt: number
+    } | null
   }
 }
