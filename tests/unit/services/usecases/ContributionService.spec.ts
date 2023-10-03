@@ -102,5 +102,15 @@ describe('ContributionService', () => {
       expect(contributionRepositorySpy.contributionID).toBe(contributionID)
       expect(contributionRepositorySpy.userID).toBe(userID)
     })
+
+    it('should return correct result if contribution is not found', async () => {
+      const { sut, contributionRepositorySpy } = makeSut()
+      contributionRepositorySpy.resultGetById = null
+      const contributionID = faker.string.uuid()
+      const userID = faker.string.uuid()
+      const result = await sut.getById(contributionID, userID)
+      expect(result.error).toEqual(new Error('Contribution not found'))
+      expect(result.data).toBeNull()
+    })
   })
 })
