@@ -18,4 +18,18 @@ export namespace TContributionRepository {
   export type CreateResult = {
     id: string
   }
+
+  export type GetResult = {
+    id: string
+    walletID: string
+    userID: string
+    purchasedCoinID: number
+    purchaseCoinID: number
+    purchasedCoinSymbol: string
+    purchaseCoinSymbol: string
+    currentPricePurchasedCoin: number
+    amountPurchasedCoin: number
+    contributionDate: number
+    createdAt: number
+  } | null
 }
