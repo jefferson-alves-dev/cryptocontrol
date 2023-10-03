@@ -60,7 +60,7 @@ export class ContributionService implements IContribution {
     }
     return {
       error: null,
-      data: null,
+      data: contribution,
     }
   }
 }
