@@ -19,7 +19,7 @@ export namespace TContributionRepository {
     id: string
   }
 
-  type DataItem = {
+  export type DataItem = {
     id: string
     walletID: string
     userID: string
