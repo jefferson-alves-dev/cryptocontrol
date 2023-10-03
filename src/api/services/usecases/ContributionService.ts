@@ -64,8 +64,18 @@ export class ContributionService implements IContribution {
     }
   }
 
-  async getAll(userID: string): Promise<TContribution.GetResult[]> {
+  async getAll(userID: string): Promise<TContribution.GetAllResult> {
     const contributions = await this.contributionRepository.getAll(userID)
-    return []
+    if (!contributions || contributions.length < 1) {
+      return {
+        error: new Error('Contributions not found'),
+        data: null,
+      }
+    }
+
+    return {
+      error: null,
+      data: contributions,
+    }
   }
 }
