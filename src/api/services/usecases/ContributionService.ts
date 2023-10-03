@@ -14,7 +14,7 @@ export class ContributionService implements IContribution {
     private readonly walletRepository: IWalletRepository,
   ) {}
 
-  async create(contributionData: TContribution.Create): Promise<TContribution.Result> {
+  async create(contributionData: TContribution.Create): Promise<TContribution.CreateResult> {
     const [userExists, walletExists] = await Promise.all([
       this.userRepository.isUserActive(contributionData.userID),
       this.walletRepository.getById(contributionData.walletID, contributionData.userID),
