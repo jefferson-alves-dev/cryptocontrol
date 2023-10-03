@@ -180,5 +180,14 @@ describe('ContributionService', () => {
       expect(contributionRepositorySpy.contributionID).toBe(contributionID)
       expect(contributionRepositorySpy.userID).toBe(userID)
     })
+
+    it('should return correct result if contribution is not deleted', async () => {
+      const { sut, contributionRepositorySpy } = makeSut()
+      contributionRepositorySpy.resultDeleteById = false
+      const contributionID = faker.string.uuid()
+      const userID = faker.string.uuid()
+      const result = await sut.deleteById(contributionID, userID)
+      expect(result.error).toEqual(new Error('Contribution not found'))
+    })
   })
 })
