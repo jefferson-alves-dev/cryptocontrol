@@ -25,7 +25,7 @@ export class ContributionRepositorySpy implements IContributionRepository {
   contributionID: string = faker.string.uuid()
   userID: string = faker.string.uuid()
 
-  resultGetById: TContributionRepository.GetResult = {
+  resultGet: TContributionRepository.GetResult = {
     id: faker.string.uuid(),
     userID: faker.string.uuid(),
     walletID: faker.string.uuid(),
@@ -38,6 +38,35 @@ export class ContributionRepositorySpy implements IContributionRepository {
     contributionDate: new Date().getTime(),
     createdAt: new Date().getTime(),
   }
+
+  resultGetAll: TContributionRepository.GetAllResult = [
+    {
+      id: faker.string.uuid(),
+      userID: faker.string.uuid(),
+      walletID: faker.string.uuid(),
+      purchasedCoinID: faker.number.int({ min: 2, max: 5 }),
+      purchaseCoinID: faker.number.int({ min: 2, max: 5 }),
+      purchasedCoinSymbol: faker.finance.currencyCode(),
+      purchaseCoinSymbol: faker.finance.currencyCode(),
+      currentPricePurchasedCoin: faker.number.int({ min: 2, max: 5 }),
+      amountPurchasedCoin: faker.number.float({ min: 8, max: 12, precision: 2 }),
+      contributionDate: new Date().getTime(),
+      createdAt: new Date().getTime(),
+    },
+    {
+      id: faker.string.uuid(),
+      userID: faker.string.uuid(),
+      walletID: faker.string.uuid(),
+      purchasedCoinID: faker.number.int({ min: 2, max: 5 }),
+      purchaseCoinID: faker.number.int({ min: 2, max: 5 }),
+      purchasedCoinSymbol: faker.finance.currencyCode(),
+      purchaseCoinSymbol: faker.finance.currencyCode(),
+      currentPricePurchasedCoin: faker.number.int({ min: 2, max: 5 }),
+      amountPurchasedCoin: faker.number.float({ min: 8, max: 12, precision: 2 }),
+      contributionDate: new Date().getTime(),
+      createdAt: new Date().getTime(),
+    },
+  ]
   async create(contributionData: TContributionRepository.Create): Promise<TContributionRepository.CreateResult> {
     this.contributionData = contributionData
     return this.resultCreate
@@ -46,6 +75,11 @@ export class ContributionRepositorySpy implements IContributionRepository {
   async getById(contributionID: string, userID: string): Promise<TContributionRepository.GetResult> {
     this.contributionID = contributionID
     this.userID = userID
-    return this.resultGetById
+    return this.resultGet
+  }
+
+  async getAll(userID: string): Promise<TContributionRepository.GetAllResult> {
+    this.userID = userID
+    return this.resultGetAll
   }
 }
