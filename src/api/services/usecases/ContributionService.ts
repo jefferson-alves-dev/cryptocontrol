@@ -49,4 +49,12 @@ export class ContributionService implements IContribution {
       },
     }
   }
+
+  async getById(contributionID: string, userID: string): Promise<TContribution.GetResult> {
+    const contribution = await this.contributionRepository.getById(contributionID, userID)
+    return {
+      error: null,
+      data: null,
+    }
+  }
 }
