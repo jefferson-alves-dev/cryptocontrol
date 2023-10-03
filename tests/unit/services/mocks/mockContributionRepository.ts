@@ -4,8 +4,8 @@ import { TContributionRepository } from '@services/protocols/types'
 
 export class ContributionRepositorySpy implements IContributionRepository {
   contributionData: TContributionRepository.Create = {
-    walletID: faker.string.uuid(),
     userID: faker.string.uuid(),
+    walletID: faker.string.uuid(),
     purchasedCoinID: faker.number.int({ min: 2, max: 5 }),
     purchaseCoinID: faker.number.int({ min: 2, max: 5 }),
     purchasedCoinSymbol: faker.finance.currencyCode(),
@@ -21,8 +21,31 @@ export class ContributionRepositorySpy implements IContributionRepository {
   resultCreate: TContributionRepository.CreateResult = {
     id: faker.string.uuid(),
   }
+
+  contributionID: string = faker.string.uuid()
+  userID: string = faker.string.uuid()
+
+  resultGetById: TContributionRepository.GetResult = {
+    id: faker.string.uuid(),
+    userID: faker.string.uuid(),
+    walletID: faker.string.uuid(),
+    purchasedCoinID: faker.number.int({ min: 2, max: 5 }),
+    purchaseCoinID: faker.number.int({ min: 2, max: 5 }),
+    purchasedCoinSymbol: faker.finance.currencyCode(),
+    purchaseCoinSymbol: faker.finance.currencyCode(),
+    currentPricePurchasedCoin: faker.number.int({ min: 2, max: 5 }),
+    amountPurchasedCoin: faker.number.float({ min: 8, max: 12, precision: 2 }),
+    contributionDate: new Date().getTime(),
+    createdAt: new Date().getTime(),
+  }
   async create(contributionData: TContributionRepository.Create): Promise<TContributionRepository.CreateResult> {
     this.contributionData = contributionData
     return this.resultCreate
+  }
+
+  async getById(contributionID: string, userID: string): Promise<TContributionRepository.GetResult> {
+    this.contributionID = contributionID
+    this.userID = userID
+    return this.resultGetById
   }
 }

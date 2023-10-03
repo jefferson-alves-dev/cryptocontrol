@@ -37,7 +37,7 @@ const makeFakeContributionData = (): TContribution.Create => ({
 })
 
 describe('ContributionService', () => {
-  describe('create', () => {
+  describe('create()', () => {
     it('should call userRepository.isUserActive() with correct value', async () => {
       const { sut, userRepositorySpy } = makeSut()
       const contributionData = makeFakeContributionData()
@@ -90,6 +90,17 @@ describe('ContributionService', () => {
       const result = await sut.create(contributionData)
       expect(result.error).toBeNull()
       expect(result.data?.id).toBeTruthy()
+    })
+  })
+
+  describe('getById()', () => {
+    it('should call contributionRepository.getById() with correct values', async () => {
+      const { sut, contributionRepositorySpy } = makeSut()
+      const contributionID = faker.string.uuid()
+      const userID = faker.string.uuid()
+      await sut.getById(contributionID, userID)
+      expect(contributionRepositorySpy.contributionID).toBe(contributionID)
+      expect(contributionRepositorySpy.userID).toBe(userID)
     })
   })
 })
