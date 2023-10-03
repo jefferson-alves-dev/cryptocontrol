@@ -4,4 +4,5 @@ export interface IContribution {
   create(contributionData: TContribution.Create): Promise<TContribution.CreateResult>
   getById(contributionID: string, userID: string): Promise<TContribution.GetResult>
   getAll(userID: string): Promise<TContribution.GetAllResult>
+  deleteById(contributionID: string, userID: string): Promise<TContribution.DeleteResult>
 }

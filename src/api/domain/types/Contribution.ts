@@ -30,6 +30,10 @@ export namespace TContribution {
     data: { id: string } | null
   }
 
+  export type DeleteResult = {
+    error: globalThis.Error | null
+  }
+
   export type GetResult = {
     error: globalThis.Error | null
     data: DataItem | null
