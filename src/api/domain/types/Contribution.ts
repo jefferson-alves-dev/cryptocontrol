@@ -19,6 +19,7 @@ export namespace TContribution {
   export type GetResult = {
     error: globalThis.Error | null
     data: {
+      id: string
       walletID: string
       userID: string
       purchasedCoinID: number
