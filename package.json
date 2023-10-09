@@ -52,12 +52,12 @@
     "typescript": "^5.2.2"
   },
   "_moduleAliases": {
-    "@bootstrap": "dist/api/bootstrap",
-    "@utils": "dist/api/utils",
-    "@presentation": "dist/api/presentation",
-    "@services": "dist/api/services",
-    "@infra": "dist/api/infra",
-    "@config": "dist/api/config",
-    "@domain": "dist/api/domain"
+    "@bootstrap": "dist/src/api/bootstrap",
+    "@utils": "dist/src/api/utils",
+    "@presentation": "dist/src/api/presentation",
+    "@services": "dist/src/api/services",
+    "@infra": "dist/src/api/infra",
+    "@config": "dist/src/api/config",
+    "@domain": "dist/src/api/domain"
   }
 }
