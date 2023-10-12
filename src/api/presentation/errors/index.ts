@@ -1,6 +1,7 @@
 export * from './GenericUnexpectedKeyError'
 export * from './InvalidEmailError'
 export * from './InvalidStringFormatError'
+export * from './InvalidTypeError'
 export * from './MissingParameterError'
 export * from './ParametersValueMismatchError'
 export * from './StringLengthExceededError'
