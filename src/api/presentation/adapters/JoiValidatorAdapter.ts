@@ -2,6 +2,7 @@ import {
   GenericUnexpectedKeyError,
   InvalidEmailError,
   InvalidStringFormatError,
+  InvalidTypeError,
   MissingParameterError,
   ParametersValueMismatchError,
   StringLengthExceededError,
@@ -45,6 +46,8 @@ export class JoiValidatorAdapter implements IValidator {
           return makeResult(
             new ParametersValueMismatchError(error.details[0].context?.valids[0]?.key, error.details[0].context?.key),
           )
+        case 'number.base':
+          return makeResult(new InvalidTypeError(error.details[0].context?.key || '', typeof value, 'number'))
         case 'object.unknown':
           if (error.details[0].context?.key) {
             return makeResult(new UnexpectedKeyError(error.details[0].context?.key))
@@ -52,9 +55,6 @@ export class JoiValidatorAdapter implements IValidator {
             return makeResult(new GenericUnexpectedKeyError())
           }
         default:
-          console.log(error)
-          console.log(error.details[0].context)
-
           return makeResult(
             new Error('Unexpected validation error. Please check the data that was sent and try again!'),
           )
