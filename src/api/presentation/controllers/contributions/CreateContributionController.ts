@@ -17,7 +17,12 @@ export class CreateContributionController implements IController {
         return badRequest(validate.error)
       }
 
-      const createContribution = await this.contributionService.create(httpRequest.body)
+      const contributionData = {
+        ...httpRequest.body,
+        userID: httpRequest.userData.userID,
+      }
+
+      const createContribution = await this.contributionService.create(contributionData)
 
       if (createContribution.error) {
         return badRequest(createContribution.error)
