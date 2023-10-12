@@ -11,18 +11,13 @@ export class GetAllContributionController implements IController {
   ) {}
   async handle(httpRequest: GetAllContributionController.Request): Promise<HttpResponse> {
     try {
-      const validate = await this.validator.validate(httpRequest.userData)
-      if (validate.error) {
-        return badRequest(validate.error)
-      }
-
       const contribution = await this.contributionService.getAll(httpRequest.userData.userID)
 
       if (contribution.error) {
         return badRequest(contribution.error)
       }
 
-      return success(contribution)
+      return success(contribution.data)
     } catch (error) {
       return serverError()
     }
