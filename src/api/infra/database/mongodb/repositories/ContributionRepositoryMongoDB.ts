@@ -26,9 +26,6 @@ export class ContributionRepositoryMongoDB implements IContributionRepository {
       amountPurchasedCoin: contribution.amountPurchasedCoin,
       contributionDate: contribution.contributionDate,
       createdAt: contribution.createdAt,
-      updatedAt: contribution.updatedAt,
-      desactivatedAt: contribution.desactivatedAt,
-      isActive: contribution.isActive,
     }))
   }
 
