@@ -11,13 +11,13 @@ export class GetByIdContributionController implements IController {
   ) {}
   async handle(httpRequest: GetByIdContributionController.Request): Promise<HttpResponse> {
     try {
-      const validate = await this.validator.validate(httpRequest.body)
+      const validate = await this.validator.validate(httpRequest.params)
       if (validate.error) {
         return badRequest(validate.error)
       }
 
       const contribution = await this.contributionService.getById(
-        httpRequest.body.contributionID,
+        httpRequest.params.contributionID,
         httpRequest.userData.userID,
       )
 
@@ -34,7 +34,7 @@ export class GetByIdContributionController implements IController {
 
 export namespace GetByIdContributionController {
   export type Request = {
-    body: { contributionID: string }
+    params: { contributionID: string }
     userData: {
       [key: string]: string
     }
