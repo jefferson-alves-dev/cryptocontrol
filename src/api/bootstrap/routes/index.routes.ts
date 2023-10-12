@@ -10,9 +10,9 @@ import withdrawalsRoutes from './withdrawals.routes'
 const router = Router()
 
 router.use('/auth', authRoutes)
-router.use('/contributions', contributionsRoutes)
 router.use('/users', usersRoutes)
+router.use('/contributions', authMiddleware, contributionsRoutes)
 router.use('/wallets', authMiddleware, walletsRoutes)
-router.use('/withdrawals', withdrawalsRoutes)
+router.use('/withdrawals', authMiddleware, withdrawalsRoutes)
 
 export default router
