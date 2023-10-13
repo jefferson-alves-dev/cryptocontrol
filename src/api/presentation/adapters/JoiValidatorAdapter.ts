@@ -1,4 +1,5 @@
 import {
+  EmptyStringError,
   GenericUnexpectedKeyError,
   InvalidEmailError,
   InvalidStringFormatError,
@@ -7,8 +8,8 @@ import {
   ParametersValueMismatchError,
   StringLengthExceededError,
   StringTooShortError,
+  UnexpectedKeyError,
 } from '@presentation/errors'
-import { UnexpectedKeyError } from '@presentation/errors/UnexpectedKeyError'
 import Joi from 'joi'
 
 import { IValidator, TValidator } from './protocols/contracts/validator'
@@ -48,6 +49,8 @@ export class JoiValidatorAdapter implements IValidator {
           )
         case 'number.base':
           return makeResult(new InvalidTypeError(error.details[0].context?.key || '', typeof value, 'number'))
+        case 'string.empty':
+          return makeResult(new EmptyStringError(error.details[0].context?.key || ''))
         case 'object.unknown':
           if (error.details[0].context?.key) {
             return makeResult(new UnexpectedKeyError(error.details[0].context?.key))
@@ -55,6 +58,8 @@ export class JoiValidatorAdapter implements IValidator {
             return makeResult(new GenericUnexpectedKeyError())
           }
         default:
+          console.log(e)
+
           return makeResult(
             new Error('Unexpected validation error. Please check the data that was sent and try again!'),
           )
