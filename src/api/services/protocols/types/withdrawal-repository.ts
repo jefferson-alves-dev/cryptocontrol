@@ -2,10 +2,11 @@ export namespace TWithdrawalRepository {
   export type Create = {
     walletID: string
     userID: string
-    withdrawalCoinID: number
-    withdrawalCoinSymbol: string
-    currentPriceWithdrawalCoin: number
-    amountWithdrawalCoin: number
+    symbolCoinUsedForWithdrawal: string
+    symbolWithdrawnCoin: string
+    amountWithdrawn: number
+    withdrawalBrokerFee: number
+    symbolCoinUsedForPayWithdrawalBrokerFee: string
     withdrawalDate: number
     createdAt: number
     updatedAt: number | null
@@ -21,10 +22,11 @@ export namespace TWithdrawalRepository {
     id: string
     walletID: string
     userID: string
-    withdrawalCoinID: number
-    withdrawalCoinSymbol: string
-    currentPriceWithdrawalCoin: number
-    amountWithdrawalCoin: number
+    symbolCoinUsedForWithdrawal: string
+    symbolWithdrawnCoin: string
+    amountWithdrawn: number
+    withdrawalBrokerFee: number
+    symbolCoinUsedForPayWithdrawalBrokerFee: string
     withdrawalDate: number
     createdAt: number
   }
