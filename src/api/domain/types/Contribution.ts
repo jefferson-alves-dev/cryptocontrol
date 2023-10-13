@@ -2,12 +2,13 @@ export namespace TContribution {
   export type Create = {
     walletID: string
     userID: string
-    purchasedCoinID: number
-    purchaseCoinID: number
-    purchasedCoinSymbol: string
-    purchaseCoinSymbol: string
-    currentPricePurchasedCoin: number
+    symbolCoinUsedForPurchase: string
+    symbolPurchasedCoin: string
+    pricePurchasedCoin: number
+    totalAmountContributed: number
     amountPurchasedCoin: number
+    brokerFee: number
+    symbolCoinUsedForPayBrokerFee: string
     contributionDate: number
   }
 
@@ -15,12 +16,13 @@ export namespace TContribution {
     id: string
     walletID: string
     userID: string
-    purchasedCoinID: number
-    purchaseCoinID: number
-    purchasedCoinSymbol: string
-    purchaseCoinSymbol: string
-    currentPricePurchasedCoin: number
+    symbolCoinUsedForPurchase: string
+    symbolPurchasedCoin: string
+    pricePurchasedCoin: number
+    totalAmountContributed: number
     amountPurchasedCoin: number
+    brokerFee: number
+    symbolCoinUsedForPayBrokerFee: string
     contributionDate: number
     createdAt: number
   }

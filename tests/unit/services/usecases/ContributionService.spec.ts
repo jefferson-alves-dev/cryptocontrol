@@ -27,12 +27,13 @@ const makeSut = (): SutTypes => {
 const makeFakeContributionData = (): TContribution.Create => ({
   walletID: faker.string.uuid(),
   userID: faker.string.uuid(),
-  purchasedCoinID: faker.number.int(),
-  purchaseCoinID: faker.number.int(),
-  purchasedCoinSymbol: faker.finance.currencyCode(),
-  purchaseCoinSymbol: faker.finance.currencyCode(),
-  currentPricePurchasedCoin: faker.number.int(),
-  amountPurchasedCoin: faker.number.int(),
+  symbolCoinUsedForPurchase: faker.finance.currencySymbol(),
+  symbolPurchasedCoin: faker.finance.currencySymbol(),
+  pricePurchasedCoin: faker.number.float({ min: 1, max: 12, precision: 2 }),
+  totalAmountContributed: faker.number.float({ min: 1, max: 12, precision: 2 }),
+  amountPurchasedCoin: faker.number.float({ min: 1, max: 12, precision: 2 }),
+  brokerFee: faker.number.float({ min: 1, max: 2, precision: 2 }),
+  symbolCoinUsedForPayBrokerFee: faker.finance.currencySymbol(),
   contributionDate: new Date().getTime(),
 })
 
@@ -122,12 +123,13 @@ describe('ContributionService', () => {
       expect(result.data?.id).toBeTruthy()
       expect(result.data?.userID).toBeTruthy()
       expect(result.data?.walletID).toBeTruthy()
-      expect(result.data?.purchasedCoinID).toBeTruthy()
-      expect(result.data?.purchaseCoinID).toBeTruthy()
-      expect(result.data?.purchasedCoinSymbol).toBeTruthy()
-      expect(result.data?.purchaseCoinSymbol).toBeTruthy()
-      expect(result.data?.currentPricePurchasedCoin).toBeTruthy()
+      expect(result.data?.symbolCoinUsedForPurchase).toBeTruthy()
+      expect(result.data?.symbolPurchasedCoin).toBeTruthy()
+      expect(result.data?.pricePurchasedCoin).toBeTruthy()
+      expect(result.data?.totalAmountContributed).toBeTruthy()
       expect(result.data?.amountPurchasedCoin).toBeTruthy()
+      expect(result.data?.brokerFee).toBeTruthy()
+      expect(result.data?.symbolCoinUsedForPayBrokerFee).toBeTruthy()
       expect(result.data?.contributionDate).toBeTruthy()
       expect(result.data?.createdAt).toBeTruthy()
     })
