@@ -1,5 +1,6 @@
 export * from './Auth'
 export * from './Contribution'
+export * from './Crypto'
 export * from './User'
 export * from './Wallet'
 export * from './Withdrawal'
