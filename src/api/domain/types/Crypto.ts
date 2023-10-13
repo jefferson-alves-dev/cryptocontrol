@@ -18,7 +18,7 @@ export namespace TCrypto {
     isActive: boolean
   }
 
-  export type Result = {
+  export type OneResult = {
     error: globalThis.Error | null
     data: TCrypto.Full | null
   }
