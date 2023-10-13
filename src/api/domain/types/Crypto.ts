@@ -22,4 +22,9 @@ export namespace TCrypto {
     error: globalThis.Error | null
     data: TCrypto.Full | null
   }
+
+  export type ManyResults = {
+    error: globalThis.Error | null
+    data: TCrypto.Full[] | null
+  }
 }
